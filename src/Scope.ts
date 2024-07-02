@@ -141,7 +141,7 @@ export class Scope {
   private setConfig(config: string, value: unknown) {
     vscode.workspace
       .getConfiguration(CONFIG)
-      .update(config, value, vscode.ConfigurationTarget.Global);
+      .update(config, value, vscode.ConfigurationTarget.Workspace);
   }
 
   private getSettings() {
@@ -270,7 +270,7 @@ export class Scope {
     if (globs) {
       vscode.workspace
         .getConfiguration()
-        .update("files.exclude", globs, vscode.ConfigurationTarget.Global);
+        .update("files.exclude", globs, vscode.ConfigurationTarget.Workspace);
     }
   }
 
