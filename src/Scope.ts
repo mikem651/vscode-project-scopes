@@ -161,7 +161,7 @@ export class Scope {
       };
     });
   }
-
+/* 
   private async heuristicIsScopeForWorkspace(
     scope: ScopeSettings,
     folder: vscode.WorkspaceFolder
@@ -185,16 +185,16 @@ export class Scope {
     );
     return most(results);
   }
-
+ */
   private async heuristicDetectScopeWorkspace(
     scope: ScopeSettings
   ): Promise<vscode.WorkspaceFolder | undefined> {
     const folders = vscode.workspace.workspaceFolders ?? [];
     const values = await Promise.all(
       folders.map(async (folder) => {
-        if (await this.heuristicIsScopeForWorkspace(scope, folder)) {
+        // if (await this.heuristicIsScopeForWorkspace(scope, folder)) {
           return folder;
-        }
+        // }
       })
     );
 
@@ -257,10 +257,12 @@ export class Scope {
       sets.push(set);
     }
 
-    const exclusionsFromInclusions = intersectPaths(...sets);
-    exclusionsFromInclusions.forEach((path) => {
-      result[path] = true;
-    });
+    if (sets.length > 0) {
+      const exclusionsFromInclusions = intersectPaths(...sets);
+      exclusionsFromInclusions.forEach((path) => {
+        result[path] = true;
+      });
+    }
 
     return result;
   }
