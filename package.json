@@ -47,7 +47,7 @@
       },
       {
         "command": "project-scopes.delete",
-        "title": "Delete project scope (DANGER!)",
+        "title": "Delete project scope",
         "category": "Project Scopes"
       },
       {
