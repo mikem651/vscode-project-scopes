@@ -67,7 +67,17 @@ export function activate(context: vscode.ExtensionContext) {
             args.path ||
             args.label ||
             vscode.window.activeTextEditor?.document.uri.path;
-          scope.toggleItem("excluded", path);
+          scope.excludeItem(path);
+        }
+      ),
+      vscode.commands.registerCommand(
+        "project-scopes.removeExclusion",
+        (args) => {
+          const path =
+            args.path ||
+            args.label ||
+            vscode.window.activeTextEditor?.document.uri.path;
+          scope.dontExcludeItem(path);
         }
       ),
     ]

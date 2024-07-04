@@ -21,6 +21,7 @@
     "onStartupFinished",
     "onView:scopesManager",
     "onCommand:project-scopes.toggleExclusion",
+    "onCommand:project-scopes.removeExclusion",
     "onCommand:project-scopes.toggle",
     "onCommand:project-scopes.refresh",
     "onCommand:project-scopes.switcher",
@@ -65,25 +66,33 @@
       },
       {
         "command": "project-scopes.toggleExclusion",
-        "title": "Project Scopes: Exclude this path (Toggle)",
+        "title": "Project Scopes: Exclude this path",
+        "category": "Project Scopes"
+      },
+      {
+        "command": "project-scopes.removeExclusion",
+        "title": "Project Scopes: Don't exclude this path",
         "category": "Project Scopes"
       }
     ],
     "menus": {
-      "commandPalette": [
-        {
-          "command": "project-scopes.toggleExclusion"
-        }
-      ],
       "editor/title/context": [
         {
           "command": "project-scopes.toggleExclusion",
+          "group": "Project Scopes"
+        },
+        {
+          "command": "project-scopes.removeExclusion",
           "group": "Project Scopes"
         }
       ],
       "explorer/context": [
         {
           "command": "project-scopes.toggleExclusion",
+          "group": "Project Scopes"
+        },
+        {
+          "command": "project-scopes.removeExclusion",
           "group": "Project Scopes"
         }
       ],
@@ -96,6 +105,11 @@
         {
           "command": "project-scopes.toggleExclusion",
           "group": "project-scopes.toggleExclusion",
+          "when": "viewItem == 'exclusion'"
+        },
+        {
+          "command": "project-scopes.removeExclusion",
+          "group": "project-scopes.removeExclusion",
           "when": "viewItem == 'exclusion'"
         }
       ]
