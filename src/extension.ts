@@ -36,7 +36,12 @@ export function activate(context: vscode.ExtensionContext) {
         if (!selectedScope) {
           return;
         }
-        scope.deleteScope(selectedScope);
+        if (selectedScope) {
+          const confirm = await vscode.window.showInformationMessage("Are you sure you want to delete this scope?", "Delete", "Cancel");
+          if (confirm === "Delete") {
+            scope.deleteScope(selectedScope);
+          }
+        }
       }),
       vscode.commands.registerCommand(
         "project-scopes.switcher",
