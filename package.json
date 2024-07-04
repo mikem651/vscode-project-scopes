@@ -96,7 +96,7 @@
         {
           "command": "project-scopes.toggleExclusion",
           "group": "project-scopes.toggleExclusion",
-          "when": "viewItem == 'inclusion'"
+          "when": "viewItem == 'exclusion'"
         }
       ]
     },
