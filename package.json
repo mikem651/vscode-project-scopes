@@ -105,17 +105,17 @@
       "view/item/context": [
         {
           "command": "project-scopes.delete",
-          "group": "project-scopes.delete",
+          "group": "Project Scopes",
           "when": "viewItem == 'scope'"
         },
         {
           "command": "project-scopes.removeExclusion",
-          "group": "project-scopes.removeExclusion",
+          "group": "Project Scopes",
           "when": "viewItem == 'exclusion'"
         },
         {
           "command": "project-scopes.editExclusion",
-          "group": "project-scopes.editExclusion",
+          "group": "Project Scopes",
           "when": "viewItem == 'exclusion'"
         }
       ]
