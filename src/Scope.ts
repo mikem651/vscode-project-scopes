@@ -108,7 +108,6 @@ export class Scope {
     const newPath = await vscode.window.showInputBox({
       value: oldPath, prompt: "Edit exclusion glob"
     });
-    console.log(`mkm ${val} --> ${oldPath} --> ${newPath}`);
 
     if (newPath) {
       this.scope["excluded"].delete(oldPath);
