@@ -20,35 +20,6 @@ const defaultScopes: JSONScopes = {
 
 const CONFIG = "project-scopes";
 
-function intersetPathsPair(setA: Set<string>, setB: Set<string>): Set<string> {
-  const res = new Set<string>();
-  for (let val of setA) {
-    let v = val;
-    while (v !== "." && v !== path.sep) {
-      if (setB.has(v)) {
-        res.add(val);
-        break;
-      }
-      v = path.dirname(v);
-    }
-  }
-  for (let val of setB) {
-    let v = val;
-    while (v !== "." && v !== path.sep) {
-      if (setA.has(v)) {
-        res.add(val);
-        break;
-      }
-      v = path.dirname(v);
-    }
-  }
-  return res;
-}
-
-function intersectPaths(...sets: Set<string>[]) {
-  return sets.reduce((acc, set) => intersetPathsPair(acc, set));
-}
-
 export class Scope {
   private scopeSettings: Record<string, ScopeSettings> = {};
   private activeScope: string = "base";
