@@ -92,15 +92,17 @@ export class Scope {
     return this.scopeSettings[name];
   }
 
-  toggleItem(list: "included" | "excluded", val: string) {
+  toggleItem(list: "excluded", val: string) {
     const path = vscode.workspace.asRelativePath(val);
-    const other = list === "included" ? "excluded" : "included";
+
     if (this.scope[list].has(path)) {
+      // was excluded, remove exclusion
       this.scope[list].delete(path);
     } else {
-      this.scope[other].delete(path);
+      // was not excluded, add exclusion
       this.scope[list].add(path);
     }
+
     this.saveScopes();
   }
 
