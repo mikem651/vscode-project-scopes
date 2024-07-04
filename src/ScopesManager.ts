@@ -32,13 +32,6 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
           ),
         ];
       }
-      if (element instanceof ScopeInclusion) {
-        return Promise.all([
-          ...[...this.scope.scopeByName(element.scopeName).included].map(
-            async (path) => new ScopeItem(path, "inclusion")
-          ),
-        ]);
-      }
       if (element instanceof ScopeExclusion) {
         return Promise.all([
           ...[...this.scope.scopeByName(element.scopeName).excluded].map(
@@ -95,13 +88,6 @@ class ScopeScope extends vscode.TreeItem {
       arguments: [label],
     };
     this.contextValue = "scope";
-  }
-}
-
-class ScopeInclusion extends vscode.TreeItem {
-  constructor(public scopeName: string, count: number) {
-    super(`Include (${count})`, vscode.TreeItemCollapsibleState.Collapsed);
-    this.iconPath = new vscode.ThemeIcon("check");
   }
 }
 
