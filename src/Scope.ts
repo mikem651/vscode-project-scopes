@@ -106,7 +106,7 @@ export class Scope {
   async editExcludeItem(val: string) {
     const oldPath = vscode.workspace.asRelativePath(val);
     const newPath = await vscode.window.showInputBox({
-      value: oldPath, prompt: "Edit exclusion"
+      value: oldPath, prompt: "Edit exclusion glob"
     });
     console.log(`mkm ${val} --> ${oldPath} --> ${newPath}`);
 

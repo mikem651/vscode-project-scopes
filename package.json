@@ -67,17 +67,17 @@
       },
       {
         "command": "project-scopes.toggleExclusion",
-        "title": "Project Scopes: Exclude this path",
+        "title": "Project Scopes: Exclude path",
         "category": "Project Scopes"
       },
       {
         "command": "project-scopes.removeExclusion",
-        "title": "Project Scopes: Don't exclude this path",
+        "title": "Project Scopes: Don't exclude path",
         "category": "Project Scopes"
       },
       {
         "command": "project-scopes.editExclusion",
-        "title": "Project Scopes: Edit this exclusion path",
+        "title": "Project Scopes: Edit exclusion glob",
         "category": "Project Scopes"
       }
     ],
