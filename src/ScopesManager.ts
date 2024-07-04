@@ -72,7 +72,7 @@ class ScopeScope extends vscode.TreeItem {
   constructor(public readonly label: string, activeScope: string) {
     super(label, vscode.TreeItemCollapsibleState.Expanded);
     this.iconPath = new vscode.ThemeIcon(
-      label === activeScope ? "circle-filled" : "circle-outline"
+      label === activeScope ? "folder-active" : "folder"
     );
     this.command = {
       command: "project-scopes.setActiveScope",
