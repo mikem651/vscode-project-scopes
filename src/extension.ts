@@ -61,16 +61,6 @@ export function activate(context: vscode.ExtensionContext) {
         scope.toggle()
       ),
       vscode.commands.registerCommand(
-        "project-scopes.toggleInclusion",
-        (args) => {
-          const path =
-            args?.path ||
-            args?.label ||
-            vscode.window.activeTextEditor?.document.uri.path;
-          scope.toggleItem("included", path);
-        }
-      ),
-      vscode.commands.registerCommand(
         "project-scopes.toggleExclusion",
         (args) => {
           const path =
