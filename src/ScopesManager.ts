@@ -78,7 +78,7 @@ class ExtensionToggle extends vscode.TreeItem {
 
 class ScopeScope extends vscode.TreeItem {
   constructor(public readonly label: string, activeScope: string) {
-    super(label, vscode.TreeItemCollapsibleState.Collapsed);
+    super(label, vscode.TreeItemCollapsibleState.Expanded);
     this.iconPath = new vscode.ThemeIcon(
       label === activeScope ? "circle-filled" : "circle-outline"
     );
@@ -93,7 +93,7 @@ class ScopeScope extends vscode.TreeItem {
 
 class ScopeExclusion extends vscode.TreeItem {
   constructor(public scopeName: string, count: number) {
-    super(`Exclude (${count})`, vscode.TreeItemCollapsibleState.Collapsed);
+    super(`Exclude (${count})`, vscode.TreeItemCollapsibleState.Expanded);
     this.iconPath = new vscode.ThemeIcon("circle-slash");
   }
 }
