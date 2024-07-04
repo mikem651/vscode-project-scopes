@@ -58,7 +58,7 @@ export function activate(context: vscode.ExtensionContext) {
         scope.refresh()
       ),
       vscode.commands.registerCommand("project-scopes.toggle", (args) =>
-        scope.toggle()
+        scope.toggleEnabled()
       ),
       vscode.commands.registerCommand(
         "project-scopes.toggleExclusion",

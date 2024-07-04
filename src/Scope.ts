@@ -57,7 +57,8 @@ export class Scope {
     this.callbacks.forEach((cb) => cb());
   }
 
-  toggle() {
+  // enable/disable the extension
+  toggleEnabled() {
     this.enabled = !this.enabled;
     this.setConfig("enabled", this.enabled);
   }
