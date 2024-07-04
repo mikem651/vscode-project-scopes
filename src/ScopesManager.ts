@@ -25,16 +25,8 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
   async getChildren(element?: Items): Promise<Items[]> {
     if (element) {
       if (element instanceof ScopeScope) {
-        return [
-          new ScopeExclusion(
-            element.label,
-            this.scope.scopeByName(element.label).excluded.size
-          ),
-        ];
-      }
-      if (element instanceof ScopeExclusion) {
         return Promise.all([
-          ...[...this.scope.scopeByName(element.scopeName).excluded].map(
+          ...[...this.scope.scopeByName(element.label).excluded].map(
             async (path) => new ScopeItem(path, "exclusion")
           ),
         ]);
@@ -88,13 +80,6 @@ class ScopeScope extends vscode.TreeItem {
       arguments: [label],
     };
     this.contextValue = "scope";
-  }
-}
-
-class ScopeExclusion extends vscode.TreeItem {
-  constructor(public scopeName: string, count: number) {
-    super(`Exclude (${count})`, vscode.TreeItemCollapsibleState.Expanded);
-    this.iconPath = new vscode.ThemeIcon("circle-slash");
   }
 }
 
