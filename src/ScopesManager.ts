@@ -26,10 +26,6 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
     if (element) {
       if (element instanceof ScopeScope) {
         return [
-          new ScopeInclusion(
-            element.label,
-            this.scope.scopeByName(element.label).included.size
-          ),
           new ScopeExclusion(
             element.label,
             this.scope.scopeByName(element.label).excluded.size
