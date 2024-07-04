@@ -1,6 +1,4 @@
-import { glob } from "glob";
 import * as path from "path";
-import { isAbsolute } from "path";
 import * as vscode from "vscode";
 
 type ScopeSettings = {
@@ -147,9 +145,6 @@ export class Scope {
   private getSettings() {
     this.enabled = this.getConfig("enabled", true);
     this.activeScope = this.getConfig("activeScope", "base");
-    const filesExclude = vscode.workspace
-      .getConfiguration()
-      .get("files.exclude", {}) as Record<string, true>;
     this.globalExclude = this.getConfig("globalExclude", {});
     let scopes = this.getConfig("scopes", defaultScopes);
 
@@ -161,109 +156,16 @@ export class Scope {
       };
     });
   }
-/* 
-  private async heuristicIsScopeForWorkspace(
-    scope: ScopeSettings,
-    folder: vscode.WorkspaceFolder
-  ): Promise<boolean> {
-    const isInWorkspace = async (f: string) => {
-      if (isAbsolute(f) && vscode.workspace.asRelativePath(f) === f) {
-        return false;
-      }
-      const filePath = vscode.Uri.parse(
-        path.join(folder.uri.fsPath, vscode.workspace.asRelativePath(f))
-      );
-      try {
-        const stat = await vscode.workspace.fs.stat(filePath);
-        return stat.type !== vscode.FileType.Unknown;
-      } catch (e) {
-        return false;
-      }
-    };
-    const results = await Promise.all(
-      [...scope.included, ...scope.excluded].map(isInWorkspace)
-    );
-    return most(results);
-  }
- */
-  private async heuristicDetectScopeWorkspace(
-    scope: ScopeSettings
-  ): Promise<vscode.WorkspaceFolder | undefined> {
-    const folders = vscode.workspace.workspaceFolders ?? [];
-    const values = await Promise.all(
-      folders.map(async (folder) => {
-        // if (await this.heuristicIsScopeForWorkspace(scope, folder)) {
-          return folder;
-        // }
-      })
-    );
-
-    return values.find((maybeFolder) => maybeFolder);
-  }
-
-  public async fileExists(filePath: string): Promise<boolean> {
-    const root = await this.heuristicDetectScopeWorkspace(this.scope);
-    if (!root) {
-      return false;
-    }
-    const rootPath = root.uri.fsPath;
-    const filePathUri = vscode.Uri.parse(
-      path.join(rootPath, vscode.workspace.asRelativePath(filePath))
-    );
-    try {
-      const stat = await vscode.workspace.fs.stat(filePathUri);
-      return stat.type !== vscode.FileType.Unknown;
-    } catch (e) {
-      return false;
-    }
-  }
 
   private async generateExclusionGlobs(): Promise<Record<string, true> | null> {
     let result: Record<string, true> = { ...this.globalExclude };
     if (!this.enabled) {
       return result;
     }
-    const root = await this.heuristicDetectScopeWorkspace(this.scope);
-    if (!root || !vscode.workspace.name?.includes(root.name)) {
-      vscode.window.showInformationMessage(
-        `Project Scopes: the selected scope cannot be applied to any workspace, skipping. Root name: '${root?.name}'; Workspace name: '${vscode.workspace.name}'`,
-        {}
-      );
-      return null;
+
+    for (const exclude of this.scope.excluded) {
+      result[exclude] = true;
     }
-    const rootPath = root.uri.fsPath;
-
-    const rel = vscode.workspace.asRelativePath;
-    this.scope.excluded.forEach((path) => {
-      result[rel(path)] = true;
-    });
-
-    let sets: Set<string>[] = [];
-    for (const folderPath of this.scope.included) {
-      const set = new Set<string>();
-      let folder = rel(folderPath);
-      let parent = path.dirname(folder);
-      while (folder !== path.dirname(parent)) {
-        const siblings = glob.sync(path.join(rootPath, parent, "*"), {
-          ignore: path.join(rootPath, folder),
-          dot: true,
-        });
-        siblings.forEach((p) => set.add(rel(p)));
-        folder = parent;
-        parent = path.dirname(parent);
-      }
-
-      set.delete(".");
-      sets.push(set);
-    }
-
-    if (sets.length > 0) {
-      const exclusionsFromInclusions = intersectPaths(...sets);
-      exclusionsFromInclusions.forEach((path) => {
-        result[path] = true;
-      });
-    }
-
     return result;
   }
 
@@ -287,9 +189,4 @@ export class Scope {
     });
     this.setConfig("scopes", scopes);
   }
-}
-
-function most(arr: Array<boolean>) {
-  const count = arr.filter(Boolean).length ?? 0;
-  return count / arr.length > 0.5;
 }

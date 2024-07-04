@@ -39,36 +39,14 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
       if (element instanceof ScopeInclusion) {
         return Promise.all([
           ...[...this.scope.scopeByName(element.scopeName).included].map(
-            async (path) => {
-              const exists = await this.scope.fileExists(path);
-              if (!exists) {
-                return new ScopeItem(
-                  `${path} (file not found)`,
-                  "inclusion",
-                  "File not found",
-                  "error"
-                );
-              }
-              return new ScopeItem(path, "inclusion");
-            }
+            async (path) => new ScopeItem(path, "inclusion")
           ),
         ]);
       }
       if (element instanceof ScopeExclusion) {
         return Promise.all([
           ...[...this.scope.scopeByName(element.scopeName).excluded].map(
-            async (path) => {
-              const exists = await this.scope.fileExists(path);
-              if (!exists) {
-                return new ScopeItem(
-                  `${path} (file not found)`,
-                  "exclusion",
-                  "File not found",
-                  "error"
-                );
-              }
-              return new ScopeItem(path, "exclusion");
-            }
+            async (path) => new ScopeItem(path, "exclusion")
           ),
         ]);
       }
