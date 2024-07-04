@@ -1,4 +1,3 @@
-import * as path from "path";
 import * as vscode from "vscode";
 
 type ScopeSettings = {
@@ -102,6 +101,20 @@ export class Scope {
     const path = vscode.workspace.asRelativePath(val);
     this.scope["excluded"].delete(path);
     this.saveScopes();
+  }
+
+  async editExcludeItem(val: string) {
+    const oldPath = vscode.workspace.asRelativePath(val);
+    const newPath = await vscode.window.showInputBox({
+      value: oldPath, prompt: "Edit exclusion"
+    });
+    console.log(`mkm ${val} --> ${oldPath} --> ${newPath}`);
+
+    if (newPath) {
+      this.scope["excluded"].delete(oldPath);
+      this.scope["excluded"].add(newPath);
+      this.saveScopes();
+    }
   }
 
   private getConfig<T>(config: string, defaultValue: T): T {

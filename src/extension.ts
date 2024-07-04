@@ -80,6 +80,16 @@ export function activate(context: vscode.ExtensionContext) {
           scope.dontExcludeItem(path);
         }
       ),
+      vscode.commands.registerCommand(
+        "project-scopes.editExclusion",
+        (args) => {
+          const path =
+            args.path ||
+            args.label ||
+            vscode.window.activeTextEditor?.document.uri.path;
+          scope.editExcludeItem(path);
+        }
+      ),
     ]
   );
 }

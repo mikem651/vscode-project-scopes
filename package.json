@@ -22,6 +22,7 @@
     "onView:scopesManager",
     "onCommand:project-scopes.toggleExclusion",
     "onCommand:project-scopes.removeExclusion",
+    "onCommand:project-scopes.editExclusion",
     "onCommand:project-scopes.toggle",
     "onCommand:project-scopes.refresh",
     "onCommand:project-scopes.switcher",
@@ -73,6 +74,11 @@
         "command": "project-scopes.removeExclusion",
         "title": "Project Scopes: Don't exclude this path",
         "category": "Project Scopes"
+      },
+      {
+        "command": "project-scopes.editExclusion",
+        "title": "Project Scopes: Edit this exclusion path",
+        "category": "Project Scopes"
       }
     ],
     "menus": {
@@ -105,6 +111,11 @@
         {
           "command": "project-scopes.removeExclusion",
           "group": "project-scopes.removeExclusion",
+          "when": "viewItem == 'exclusion'"
+        },
+        {
+          "command": "project-scopes.editExclusion",
+          "group": "project-scopes.editExclusion",
           "when": "viewItem == 'exclusion'"
         }
       ]
