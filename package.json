@@ -79,6 +79,11 @@
         "command": "project-scopes.editExclusion",
         "title": "Project Scopes: Edit exclusion glob",
         "category": "Project Scopes"
+      },
+      {
+        "command": "project-scopes.addExclusion",
+        "title": "Add exclusion glob",
+        "category": "Project Scopes"
       }
     ],
     "menus": {
@@ -103,6 +108,11 @@
         }
       ],
       "view/item/context": [
+        {
+          "command": "project-scopes.addExclusion",
+          "group": "Project Scopes",
+          "when": "viewItem == 'scope'"
+        },
         {
           "command": "project-scopes.delete",
           "group": "Project Scopes",

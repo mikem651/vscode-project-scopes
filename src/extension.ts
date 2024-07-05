@@ -26,6 +26,26 @@ export function activate(context: vscode.ExtensionContext) {
         }
         scope.setActiveScope(userResponse);
       }),
+      vscode.commands.registerCommand("project-scopes.addExclusion", async (args) => {
+        let selectedScope = args?.label;
+        if (!selectedScope) {
+          selectedScope = await vscode.window.showQuickPick(scope.scopes, {
+            title: "Select project scope to add to",
+          });
+        }
+        if (!selectedScope) {
+          return;
+        }
+        if (selectedScope) {
+          const glob = await vscode.window.showInputBox({
+            placeHolder: "Glob to exclude"
+          });
+          if (!glob) {
+            return;
+          }
+          scope.excludeItem(glob);
+        }
+      }),
       vscode.commands.registerCommand("project-scopes.delete", async (args) => {
         let selectedScope = args?.label;
         if (!selectedScope) {
