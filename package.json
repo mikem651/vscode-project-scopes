@@ -77,12 +77,14 @@
       {
         "command": "project-scopes.activateAllScopes",
         "title": "Activate all project scopes",
-        "category": "Project Scopes"
+        "category": "Project Scopes",
+        "icon": "$(check-all)"
       },
       {
         "command": "project-scopes.deactivateAllScopes",
         "title": "Deactivate all project scopes",
-        "category": "Project Scopes"
+        "category": "Project Scopes",
+        "icon": "$(clear-all)"
       },
       {
         "command": "project-scopes.addExclusionPath",
@@ -164,6 +166,16 @@
           "command": "project-scopes.editExclusion",
           "group": "Project Scopes",
           "when": "viewItem == 'exclusion'"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "project-scopes.activateAllScopes",
+          "group": "navigation"
+        },
+        {
+          "command": "project-scopes.deactivateAllScopes",
+          "group": "navigation"
         }
       ]
     },
