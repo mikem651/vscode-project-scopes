@@ -37,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
           return;
         }
         const glob = await vscode.window.showInputBox({
-          placeHolder: "Glob to exclude"
+          placeHolder: "Glob to hide"
         });
         if (!glob) {
           return;
@@ -109,7 +109,7 @@ export function activate(context: vscode.ExtensionContext) {
             args.label ||
             vscode.window.activeTextEditor?.document.uri.path;
           const newPath = await vscode.window.showInputBox({
-            value: path, prompt: "Edit exclusion glob"
+            value: path, prompt: "Edit glob"
           });
           if (newPath) {
             scope.editExcludeItem(args.scopeName || scope.getActiveScope(), path, newPath);

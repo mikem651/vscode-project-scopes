@@ -1,7 +1,7 @@
 {
-  "name": "explorer-exclude-manager",
-  "displayName": "Explorer Exclude Manager",
-  "description": "Define sets where each set can contain multiple globs. Each set can be enabled or disabled. Explorer will only show files that were not matched by any enabled glob set.",
+  "name": "project-scopes-manager",
+  "displayName": "Project Scopes Manager",
+  "description": "Define scopes which can contain multiple globs. Each scope can be enabled or disabled. Explorer will hide files that matched any enabled scope.",
   "version": "2.0.0",
   "license": "MIT",
   "private": true,
@@ -68,22 +68,22 @@
       },
       {
         "command": "project-scopes.addExclusionPath",
-        "title": "Project Scopes: Exclude path",
+        "title": "Project Scopes: Hide path",
         "category": "Project Scopes"
       },
       {
         "command": "project-scopes.removeExclusion",
-        "title": "Project Scopes: Don't exclude path",
+        "title": "Project Scopes: Don't hide path",
         "category": "Project Scopes"
       },
       {
         "command": "project-scopes.editExclusion",
-        "title": "Project Scopes: Edit exclusion glob",
+        "title": "Project Scopes: Edit glob",
         "category": "Project Scopes"
       },
       {
         "command": "project-scopes.addExclusionGlob",
-        "title": "Add exclusion glob",
+        "title": "Add glob",
         "category": "Project Scopes"
       }
     ],
