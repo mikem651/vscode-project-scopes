@@ -103,10 +103,10 @@ export class Scope {
     this.saveScopes();
   }
 
-  async editExcludeItem(scopeName: string, oldPath: string, newPath: string) {
+  editExcludeItem(scopeName: string, oldPath: string, newPath: string) {
     if (newPath) {
-      this.scopeByName(scopeName).excluded.delete(oldPath);
-      this.scopeByName(scopeName).excluded.add(newPath);
+      this.scopeByName(scopeName).excluded.delete(vscode.workspace.asRelativePath(oldPath));
+      this.scopeByName(scopeName).excluded.add(vscode.workspace.asRelativePath(newPath));
       this.saveScopes();
     }
   }
