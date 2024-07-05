@@ -116,7 +116,7 @@ export function activate(context: vscode.ExtensionContext) {
             value: path, prompt: "Edit exclusion glob"
           });
           if (newPath) {
-            scope.editExcludeItem(args.scope, path, newPath);
+            scope.editExcludeItem(args.scopeName, path, newPath);
           }
         }
       ),
