@@ -44,7 +44,7 @@
     "commands": [
       {
         "command": "project-scopes.add",
-        "title": "Add a new project scope and switch to it",
+        "title": "Add a new project scope and activate it",
         "category": "Project Scopes"
       },
       {
@@ -69,7 +69,7 @@
       },
       {
         "command": "project-scopes.toggleActivateScope",
-        "title": "Toggle project scopes",
+        "title": "Toggle project scope activation",
         "category": "Project Scopes"
       },
       {
@@ -94,6 +94,24 @@
       }
     ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "project-scopes.addExclusionPath",
+          "when": "false"
+        },
+        {
+          "command": "project-scopes.removeExclusion",
+          "when": "false"
+        },
+        {
+          "command": "project-scopes.editExclusion",
+          "when": "false"
+        },
+        {
+          "command": "project-scopes.toggleActivateScope",
+          "when": "false"
+        }
+      ],
       "editor/title/context": [
         {
           "command": "project-scopes.addExclusionPath",
