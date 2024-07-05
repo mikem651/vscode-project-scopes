@@ -68,15 +68,15 @@ export class Scope {
 
   activateScope(scope: string) {
     this.activeScopes.add(scope);
-    if (!this.scopeSettings[scope]) {
-      this.scopeSettings[scope] = { included: new Set(), excluded: new Set() };
-      this.saveScopes();
-    }
-    this.setConfig("activeScopes", Array.from(this.activeScopesGet));
+    this.saveScopeSettings(scope);
   }
 
   deactivateScope(scope: string) {
     this.activeScopes.delete(scope);
+    this.saveScopeSettings(scope);
+  }
+
+  private saveScopeSettings(scope: string) {
     if (!this.scopeSettings[scope]) {
       this.scopeSettings[scope] = { included: new Set(), excluded: new Set() };
       this.saveScopes();
