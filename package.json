@@ -53,7 +53,7 @@
       },
       {
         "command": "project-scopes.switcher",
-        "title": "Open project scope switcher",
+        "title": "Toggle project scope",
         "category": "Project Scopes"
       },
       {

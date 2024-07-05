@@ -63,12 +63,12 @@ export function activate(context: vscode.ExtensionContext) {
         "project-scopes.switcher",
         async (args) => {
           const userResponse = await vscode.window.showQuickPick(scope.scopes, {
-            title: "Select project scope to activate"
+            title: "Select project scope to toggle"
           });
           if (!userResponse) {
             return;
           }
-          scope.activateScope(userResponse);
+          scope.toggleActivateScope(userResponse);
         }
       ),
       vscode.commands.registerCommand("project-scopes.toggleActiveScope", (args) =>
