@@ -10,6 +10,8 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
   readonly onDidChangeTreeData: vscode.Event<Items | undefined | null | void> =
     this._onDidChangeTreeData.event;
 
+  private readonly extensionToggleEnabled = new ExtensionToggle(true);
+  private readonly extensionToggleDisabled = new ExtensionToggle(false);
   private readonly addButton = new AddButton();
 
   constructor(private scope: Scope) {
@@ -28,10 +30,12 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
     // top level
     if (!element) {
       return [
-        new ExtensionToggle(this.scope.isEnabled),
+        this.scope.isEnabled ? this.extensionToggleEnabled : this.extensionToggleDisabled,
+
         ...this.scope.scopes.map(
           (scope) => new ScopeScope(scope, this.scope.scopesActive.has(scope))
         ),
+
         this.addButton
       ];
     }
