@@ -36,7 +36,7 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
       return [
         new ExtensionToggle(this.scope.isEnabled),
         ...this.scope.scopes.map(
-          (scope) => new ScopeScope(scope, this.scope.activeScopesGet.has(scope))
+          (scope) => new ScopeScope(scope, this.scope.scopesActive.has(scope))
         ),
         new AddButton(),
       ];

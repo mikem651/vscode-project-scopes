@@ -48,9 +48,13 @@ export class Scope {
     return Object.keys(this.scopeSettings).sort();
   }
 
+  get scopesActive(): ReadonlySet<string> {
+    return this.activeScopes;
+  }
+
   get singleActiveScope(): string | null {
-    if (this.activeScopesGet.size === 1) {
-      return this.activeScopesGet.values().next().value;
+    if (this.activeScopes.size === 1) {
+      return this.activeScopes.values().next().value;
     }
     return null;
   }
@@ -65,10 +69,6 @@ export class Scope {
   toggleEnabled() {
     this.enabled = !this.enabled;
     this.setConfig("enabled", this.enabled);
-  }
-
-  get activeScopesGet(): ReadonlySet<string> {
-    return this.activeScopes;
   }
 
   activateScope(...scopes: string[]) {
@@ -91,7 +91,7 @@ export class Scope {
     if (needToSave) {
       this.saveScopes();
     }
-    this.setConfig("activeScopes", Array.from(this.activeScopesGet));
+    this.setConfig("activeScopes", Array.from(this.activeScopes));
   }
 
   toggleActivateScope(scope: string) {
