@@ -25,16 +25,8 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
   }
 
   getChildren(element?: Items): Items[] {
-    if (element) {
-      if (element instanceof ScopeScope) {
-        return [
-          ...[...this.scope.scopeByName(element.label).excluded].sort().map(
-            (path) => new ScopeItem(path, "exclusion", element.label)
-          ),
-        ];
-      }
-      return [] as Items[];
-    } else {
+    // top level
+    if (!element) {
       return [
         new ExtensionToggle(this.scope.isEnabled),
         ...this.scope.scopes.map(
@@ -43,6 +35,16 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
         this.addButton
       ];
     }
+
+    if (element instanceof ScopeScope) {
+      return [
+        ...[...this.scope.scopeByName(element.label).excluded].sort().map(
+          (path) => new ScopeItem(path, "exclusion", element.label)
+        ),
+      ];
+    }
+
+    return [] as Items[];
   }
 }
 
