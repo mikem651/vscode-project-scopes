@@ -1,18 +1,16 @@
 import * as vscode from "vscode";
 
 type ScopeSettings = {
-  included: Set<string>;
   excluded: Set<string>;
 };
 
 type JSONScopes = Record<
   string,
-  Record<"included" | "excluded", Array<string>>
+  Record<"excluded", Array<string>>
 >;
 
 const defaultScopes: JSONScopes = {
   base: {
-    included: [],
     excluded: [],
   },
 };
@@ -77,7 +75,7 @@ export class Scope {
   private xactivateScope(fn: (param: string) => unknown, scope: string) {
     fn(scope);
     if (!this.scopeSettings[scope]) {
-      this.scopeSettings[scope] = { included: new Set(), excluded: new Set() };
+      this.scopeSettings[scope] = { excluded: new Set() };
       this.saveScopes();
     }
     this.setConfig("activeScopes", Array.from(this.activeScopesGet));
@@ -142,7 +140,6 @@ export class Scope {
     this.scopeSettings = {};
     Object.keys(scopes).forEach((key) => {
       this.scopeSettings[key] = {
-        included: new Set(scopes[key].included),
         excluded: new Set(scopes[key].excluded),
       };
     });
@@ -176,7 +173,6 @@ export class Scope {
     Object.keys(this.scopeSettings).forEach((key) => {
       const scope = this.scopeSettings[key];
       scopes[key] = {
-        included: [...scope.included.values()],
         excluded: [...scope.excluded.values()],
       };
     });

@@ -153,11 +153,10 @@
           "type": "object",
           "default": {
             "base": {
-              "included": [],
               "excluded": []
             }
           },
-          "description": "Inclusion/exclusion settings per scope"
+          "description": "Exclusion settings per scope"
         }
       }
     }
