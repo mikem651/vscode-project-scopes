@@ -10,6 +10,8 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
   readonly onDidChangeTreeData: vscode.Event<Items | undefined | null | void> =
     this._onDidChangeTreeData.event;
 
+  private readonly addButton = new AddButton();
+
   constructor(private scope: Scope) {
     scope.subscribe(() => this.refresh());
   }
@@ -38,7 +40,7 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
         ...this.scope.scopes.map(
           (scope) => new ScopeScope(scope, this.scope.scopesActive.has(scope))
         ),
-        new AddButton(),
+        this.addButton
       ];
     }
   }
