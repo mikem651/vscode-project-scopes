@@ -24,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (!userResponse) {
           return;
         }
-        scope.setActiveScope(userResponse);
+        scope.activateScope(userResponse);
       }),
       vscode.commands.registerCommand("project-scopes.addExclusionGlob", async (args) => {
         let selectedScope = args?.label;
@@ -63,17 +63,16 @@ export function activate(context: vscode.ExtensionContext) {
         "project-scopes.switcher",
         async (args) => {
           const userResponse = await vscode.window.showQuickPick(scope.scopes, {
-            title: "Select project scope to switch to",
-            placeHolder: scope.getActiveScope(),
+            title: "Select project scope to activate"
           });
           if (!userResponse) {
             return;
           }
-          scope.setActiveScope(userResponse);
+          scope.activateScope(userResponse);
         }
       ),
-      vscode.commands.registerCommand("project-scopes.setActiveScope", (args) =>
-        scope.setActiveScope(args)
+      vscode.commands.registerCommand("project-scopes.toggleActiveScope", (args) =>
+        scope.toggleActivateScope(args)
       ),
       vscode.commands.registerCommand("project-scopes.refresh", (args) =>
         scope.refresh()
@@ -83,22 +82,40 @@ export function activate(context: vscode.ExtensionContext) {
       ),
       vscode.commands.registerCommand(
         "project-scopes.addExclusionPath",
-        (args) => {
+        async (args) => {
           const path =
             args.path ||
             args.label ||
             vscode.window.activeTextEditor?.document.uri.path;
-          scope.excludeItem(args.scopeName || scope.getActiveScope(), path);
+          let selectedScope = args.scopeName;
+          if (!selectedScope) {
+            selectedScope = await vscode.window.showQuickPick(scope.scopes, {
+              title: "Select project scope to add to",
+            });
+          }
+          if (!selectedScope) {
+            return;
+          }
+          scope.excludeItem(selectedScope, path);
         }
       ),
       vscode.commands.registerCommand(
         "project-scopes.removeExclusion",
-        (args) => {
+        async (args) => {
           const path =
             args.path ||
             args.label ||
             vscode.window.activeTextEditor?.document.uri.path;
-          scope.dontExcludeItem(args.scopeName || scope.getActiveScope(), path);
+          let selectedScope = args.scopeName;
+          if (!selectedScope) {
+            selectedScope = await vscode.window.showQuickPick(scope.scopes, {
+              title: "Select project scope to remove from",
+            });
+          }
+          if (!selectedScope) {
+            return;
+          }
+          scope.dontExcludeItem(selectedScope, path);
         }
       ),
       vscode.commands.registerCommand(
@@ -111,8 +128,11 @@ export function activate(context: vscode.ExtensionContext) {
           const newPath = await vscode.window.showInputBox({
             value: path, prompt: "Edit glob"
           });
+          if (!args.scopeName) {
+            return;
+          }
           if (newPath) {
-            scope.editExcludeItem(args.scopeName || scope.getActiveScope(), path, newPath);
+            scope.editExcludeItem(args.scopeName, path, newPath);
           }
         }
       ),

@@ -144,6 +144,11 @@
           "default": "base",
           "description": "Scope currently in use by the Scopes extension"
         },
+        "project-scopes.activeScopes": {
+          "type": "array",
+          "default": [],
+          "description": "Scopes currently in use by the Scopes extension"
+        },
         "project-scopes.globalExclude": {
           "type": "object",
           "default": null,

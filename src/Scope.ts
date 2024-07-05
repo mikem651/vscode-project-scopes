@@ -21,7 +21,7 @@ const CONFIG = "project-scopes";
 
 export class Scope {
   private scopeSettings: Record<string, ScopeSettings> = {};
-  private activeScope: string = "base";
+  private activeScopes: Set<string> = new Set<string>();
   private globalExclude: Record<string, true> = {};
   private enabled: boolean = false;
   private callbacks: (() => void)[] = [];
@@ -62,17 +62,34 @@ export class Scope {
     this.setConfig("enabled", this.enabled);
   }
 
-  getActiveScope() {
-    return this.activeScope;
+  get activeScopesGet(): ReadonlySet<string> {
+    return this.activeScopes;
   }
 
-  setActiveScope(scope: string) {
-    this.activeScope = scope;
+  activateScope(scope: string) {
+    this.activeScopes.add(scope);
     if (!this.scopeSettings[scope]) {
       this.scopeSettings[scope] = { included: new Set(), excluded: new Set() };
       this.saveScopes();
     }
-    this.setConfig("activeScope", scope);
+    this.setConfig("activeScopes", Array.from(this.activeScopesGet));
+  }
+
+  deactivateScope(scope: string) {
+    this.activeScopes.delete(scope);
+    if (!this.scopeSettings[scope]) {
+      this.scopeSettings[scope] = { included: new Set(), excluded: new Set() };
+      this.saveScopes();
+    }
+    this.setConfig("activeScopes", Array.from(this.activeScopesGet));
+  }
+
+  toggleActivateScope(scope: string) {
+    if (this.activeScopes.has(scope)) {
+      this.deactivateScope(scope);
+    } else {
+      this.activateScope(scope);
+    }
   }
 
   deleteScope(scope: string) {
@@ -81,10 +98,6 @@ export class Scope {
     }
     delete this.scopeSettings[scope];
     this.saveScopes();
-  }
-
-  get scope() {
-    return this.scopeSettings[this.activeScope];
   }
 
   scopeByName(name: string) {
@@ -123,7 +136,7 @@ export class Scope {
 
   private getSettings() {
     this.enabled = this.getConfig("enabled", true);
-    this.activeScope = this.getConfig("activeScope", "base");
+    this.activeScopes = new Set<string>(this.getConfig("activeScopes", new Set()));
     this.globalExclude = this.getConfig("globalExclude", {});
     let scopes = this.getConfig("scopes", defaultScopes);
 
@@ -142,8 +155,10 @@ export class Scope {
       return result;
     }
 
-    for (const exclude of this.scope.excluded) {
-      result[exclude] = true;
+    for (const activeScope of this.activeScopes) {
+      for (const exclude of this.scopeByName(activeScope).excluded) {
+        result[exclude] = true;
+      }
     }
     return result;
   }

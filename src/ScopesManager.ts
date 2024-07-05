@@ -36,7 +36,7 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
       return [
         new ExtensionToggle(this.scope.isEnabled),
         ...this.scope.scopes.sort().map(
-          (scope) => new ScopeScope(scope, this.scope.getActiveScope())
+          (scope) => new ScopeScope(scope, this.scope.activeScopesGet.has(scope))
         ),
         new AddButton(),
       ];
@@ -69,13 +69,13 @@ class ExtensionToggle extends vscode.TreeItem {
 }
 
 class ScopeScope extends vscode.TreeItem {
-  constructor(public readonly label: string, activeScope: string) {
-    super(label, vscode.TreeItemCollapsibleState.Expanded);
+  constructor(public readonly label: string, active: boolean) {
+    super(label, active ? vscode.TreeItemCollapsibleState.Expanded : vscode.TreeItemCollapsibleState.Collapsed);
     this.iconPath = new vscode.ThemeIcon(
-      label === activeScope ? "folder-active" : "folder"
+      active ? "folder-active" : "folder"
     );
     this.command = {
-      command: "project-scopes.setActiveScope",
+      command: "project-scopes.toggleActiveScope",
       title: "Change scope",
       arguments: [label],
     };
