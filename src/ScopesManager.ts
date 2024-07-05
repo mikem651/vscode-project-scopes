@@ -11,38 +11,35 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
   readonly onDidChangeTreeData: vscode.Event<Items | undefined | null | void>
     = this._onDidChangeTreeData.event;
 
-  private readonly extensionToggleEnabled = new class extends vscode.TreeItem {
-    constructor() {
-      super("Hiding Files", vscode.TreeItemCollapsibleState.None);
-      this.iconPath = new vscode.ThemeIcon("eye-closed");
-      this.command = {
-        command: "project-scopes.toggle",
-        title: "Toggle",
-      };
-    }
-  };
+  private readonly extensionToggleEnabled = (() => {
+    const item = new vscode.TreeItem("Hiding Files", vscode.TreeItemCollapsibleState.None);
+    item.iconPath = new vscode.ThemeIcon("eye-closed");
+    item.command = {
+      command: "project-scopes.toggle",
+      title: "Toggle",
+    };
+    return item;
+  })();
 
-  private readonly extensionToggleDisabled = new class extends vscode.TreeItem {
-    constructor() {
-      super("Showing Files", vscode.TreeItemCollapsibleState.None);
-      this.iconPath = new vscode.ThemeIcon("eye");
-      this.command = {
-        command: "project-scopes.toggle",
-        title: "Toggle",
-      };
-    }
-  };
+  private readonly extensionToggleDisabled = (() => {
+    const item = new vscode.TreeItem("Showing Files", vscode.TreeItemCollapsibleState.None);
+    item.iconPath = new vscode.ThemeIcon("eye");
+    item.command = {
+      command: "project-scopes.toggle",
+      title: "Toggle",
+    };
+    return item;
+  })();
 
-  private readonly addButton = new class extends vscode.TreeItem {
-    constructor() {
-      super("Add new scope", vscode.TreeItemCollapsibleState.None);
-      this.iconPath = new vscode.ThemeIcon("file-directory-create");
-      this.command = {
-        command: "project-scopes.add",
-        title: "Add",
-      };
-    }
-  };
+  private readonly addButton = (() => {
+    const item = new vscode.TreeItem("Add new scope", vscode.TreeItemCollapsibleState.None);
+    item.iconPath = new vscode.ThemeIcon("file-directory-create");
+    item.command = {
+      command: "project-scopes.add",
+      title: "Add",
+    };
+    return item;
+  })();
 
   constructor(private scope: Scope) {
     scope.subscribe(() => this.refresh());
