@@ -57,9 +57,9 @@ class AddButton extends vscode.TreeItem {
 
 class ExtensionToggle extends vscode.TreeItem {
   constructor(enabled: boolean) {
-    super("Enabled", vscode.TreeItemCollapsibleState.None);
+    super(enabled ? "Hiding Files" : "Showing Files", vscode.TreeItemCollapsibleState.None);
     this.iconPath = new vscode.ThemeIcon(
-      enabled ? "pass-filled" : "circle-large-outline"
+      enabled ? "eye-closed" : "eye"
     );
     this.command = {
       command: "project-scopes.toggle",
