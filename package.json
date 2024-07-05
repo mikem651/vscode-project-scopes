@@ -20,6 +20,7 @@
   "activationEvents": [
     "onStartupFinished",
     "onView:scopesManager",
+    "onCommand:project-scopes.addExclusion",
     "onCommand:project-scopes.toggleExclusion",
     "onCommand:project-scopes.removeExclusion",
     "onCommand:project-scopes.editExclusion",
