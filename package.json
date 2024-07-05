@@ -1,7 +1,7 @@
 {
-  "name": "mkm-project-scopes",
-  "displayName": "MKM Project Scopes",
-  "description": "Allows you to split up a code repository into multiple views (scopes) in file explorer and file search.",
+  "name": "explorer-exclude-manager",
+  "displayName": "Explorer Exclude Manager",
+  "description": "Define sets where each set can contain multiple globs. Each set can be enabled or disabled. Explorer will only show files that were not matched by any enabled glob set.",
   "version": "2.0.0",
   "license": "MIT",
   "private": true,
