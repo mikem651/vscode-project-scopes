@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { Scope } from "./Scope";
 
-type Items = AddButton | ExtensionToggle | ScopeScope | ScopeItem;
+type Items = vscode.TreeItem | ScopeScope | ScopeItem;
 
 export class ScopesManager implements vscode.TreeDataProvider<Items> {
   private _onDidChangeTreeData: vscode.EventEmitter<
@@ -10,9 +10,38 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
   readonly onDidChangeTreeData: vscode.Event<Items | undefined | null | void> =
     this._onDidChangeTreeData.event;
 
-  private readonly extensionToggleEnabled = new ExtensionToggle(true);
-  private readonly extensionToggleDisabled = new ExtensionToggle(false);
-  private readonly addButton = new AddButton();
+  private readonly extensionToggleEnabled = new class extends vscode.TreeItem {
+    constructor() {
+      super("Hiding Files", vscode.TreeItemCollapsibleState.None);
+      this.iconPath = new vscode.ThemeIcon("eye-closed");
+      this.command = {
+        command: "project-scopes.toggle",
+        title: "Toggle",
+      };
+    }
+  };
+
+  private readonly extensionToggleDisabled = new class extends vscode.TreeItem {
+    constructor() {
+      super("Showing Files", vscode.TreeItemCollapsibleState.None);
+      this.iconPath = new vscode.ThemeIcon("eye");
+      this.command = {
+        command: "project-scopes.toggle",
+        title: "Toggle",
+      };
+    }
+  };
+
+  private readonly addButton = new class extends vscode.TreeItem {
+    constructor() {
+      super("Add new scope", vscode.TreeItemCollapsibleState.None);
+      this.iconPath = new vscode.ThemeIcon("file-directory-create");
+      this.command = {
+        command: "project-scopes.add",
+        title: "Add",
+      };
+    }
+  };
 
   constructor(private scope: Scope) {
     scope.subscribe(() => this.refresh());
@@ -49,30 +78,6 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
     }
 
     return [] as Items[];
-  }
-}
-
-class AddButton extends vscode.TreeItem {
-  constructor() {
-    super("Add new scope", vscode.TreeItemCollapsibleState.None);
-    this.iconPath = new vscode.ThemeIcon("file-directory-create");
-    this.command = {
-      command: "project-scopes.add",
-      title: "Add",
-    };
-  }
-}
-
-class ExtensionToggle extends vscode.TreeItem {
-  constructor(enabled: boolean) {
-    super(enabled ? "Hiding Files" : "Showing Files", vscode.TreeItemCollapsibleState.None);
-    this.iconPath = new vscode.ThemeIcon(
-      enabled ? "eye-closed" : "eye"
-    );
-    this.command = {
-      command: "project-scopes.toggle",
-      title: "Toggle",
-    };
   }
 }
 
