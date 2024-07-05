@@ -100,8 +100,6 @@ class ScopeItem extends vscode.TreeItem {
     if (tooltip) {
       this.tooltip = tooltip;
     }
-    if (iconPath) {
-      this.iconPath = new vscode.ThemeIcon(iconPath);
-    }
+    this.iconPath = new vscode.ThemeIcon(iconPath || "file");
   }
 }
