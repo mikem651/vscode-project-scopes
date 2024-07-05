@@ -103,6 +103,10 @@ export class Scope {
   }
 
   deleteScope(scope: string) {
+    if (this.activeScopes.delete(scope)) {
+      this.setConfig("activeScopes", Array.from(this.activeScopes));
+    }
+
     if (!this.scopeSettings[scope]) {
       return;
     }
@@ -158,7 +162,7 @@ export class Scope {
     });
   }
 
-  private async generateExclusionGlobs(): Promise<Record<string, true> | null> {
+  private generateExclusionGlobs(): Record<string, true> | null {
     let result: Record<string, true> = { ...this.globalExclude };
     if (!this.enabled) {
       return result;
@@ -173,7 +177,7 @@ export class Scope {
   }
 
   private async updateFilesExclude() {
-    const globs = await this.generateExclusionGlobs();
+    const globs = this.generateExclusionGlobs();
     if (globs) {
       vscode.workspace
         .getConfiguration()
