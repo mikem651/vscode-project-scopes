@@ -74,6 +74,12 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.commands.registerCommand("project-scopes.toggleActivateScope", (args) =>
         scope.toggleActivateScope(args)
       ),
+      vscode.commands.registerCommand("project-scopes.activateAllScopes", (args) =>
+        scope.activateScope(...scope.scopes)
+      ),
+      vscode.commands.registerCommand("project-scopes.deactivateAllScopes", (args) =>
+        scope.deactivateScope(...scope.scopes)
+      ),
       vscode.commands.registerCommand("project-scopes.refresh", (args) =>
         scope.refresh()
       ),

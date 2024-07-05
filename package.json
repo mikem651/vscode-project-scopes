@@ -26,6 +26,8 @@
     "onCommand:project-scopes.editExclusion",
     "onCommand:project-scopes.toggle",
     "onCommand:project-scopes.toggleActivateScope",
+    "onCommand:project-scopes.activateAllScopes",
+    "onCommand:project-scopes.deactivateAllScopes",
     "onCommand:project-scopes.refresh",
     "onCommand:project-scopes.switcher",
     "onCommand:project-scopes.delete",
@@ -70,6 +72,16 @@
       {
         "command": "project-scopes.toggleActivateScope",
         "title": "Toggle project scope activation",
+        "category": "Project Scopes"
+      },
+      {
+        "command": "project-scopes.activateAllScopes",
+        "title": "Activate all project scopes",
+        "category": "Project Scopes"
+      },
+      {
+        "command": "project-scopes.deactivateAllScopes",
+        "title": "Deactivate all project scopes",
         "category": "Project Scopes"
       },
       {

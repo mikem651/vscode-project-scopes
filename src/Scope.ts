@@ -71,18 +71,24 @@ export class Scope {
     return this.activeScopes;
   }
 
-  activateScope(scope: string) {
-    this.xactivateScope(this.activeScopes.add.bind(this.activeScopes), scope);
+  activateScope(...scopes: string[]) {
+    this.xactivateScope(this.activeScopes.add.bind(this.activeScopes), ...scopes);
   }
 
-  deactivateScope(scope: string) {
-    this.xactivateScope(this.activeScopes.delete.bind(this.activeScopes), scope);
+  deactivateScope(...scopes: string[]) {
+    this.xactivateScope(this.activeScopes.delete.bind(this.activeScopes), ...scopes);
   }
 
-  private xactivateScope(fn: (param: string) => unknown, scope: string) {
-    fn(scope);
-    if (!this.scopeSettings[scope]) {
-      this.scopeSettings[scope] = { excluded: new Set() };
+  private xactivateScope(fn: (param: string) => unknown, ...scopes: string[]) {
+    let needToSave = false;
+    for (const scope of scopes) {
+      fn(scope);
+      if (!this.scopeSettings[scope]) {
+        this.scopeSettings[scope] = { excluded: new Set() };
+        needToSave = true;
+      }
+    }
+    if (needToSave) {
       this.saveScopes();
     }
     this.setConfig("activeScopes", Array.from(this.activeScopesGet));
