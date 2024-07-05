@@ -176,7 +176,7 @@ export class Scope {
     return result;
   }
 
-  private async updateFilesExclude() {
+  private updateFilesExclude() {
     const globs = this.generateExclusionGlobs();
     if (globs) {
       vscode.workspace
