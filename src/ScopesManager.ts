@@ -26,7 +26,7 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
     if (element) {
       if (element instanceof ScopeScope) {
         return Promise.all([
-          ...[...this.scope.scopeByName(element.label).excluded].map(
+          ...[...this.scope.scopeByName(element.label).excluded].sort().map(
             async (path) => new ScopeItem(path, "exclusion")
           ),
         ]);
@@ -35,7 +35,7 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
     } else {
       return [
         new ExtensionToggle(this.scope.isEnabled),
-        ...this.scope.scopes.map(
+        ...this.scope.scopes.sort().map(
           (scope) => new ScopeScope(scope, this.scope.getActiveScope())
         ),
         new AddButton(),
