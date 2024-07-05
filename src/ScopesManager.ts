@@ -84,19 +84,16 @@ class ScopeScope extends vscode.TreeItem {
 }
 
 class ScopeItem extends vscode.TreeItem {
-  scopeName: string;
-
   constructor(
     public readonly label: string,
     context: string,
-    scopeName: string,
+    public readonly scopeName: string,
     tooltip?: string,
     iconPath?: string
   ) {
     super(label, vscode.TreeItemCollapsibleState.None);
     this.resourceUri = vscode.Uri.parse(label);
     this.contextValue = context;
-    this.scopeName = scopeName;
     if (tooltip) {
       this.tooltip = tooltip;
     }
