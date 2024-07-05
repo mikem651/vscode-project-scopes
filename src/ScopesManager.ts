@@ -4,11 +4,12 @@ import { Scope } from "./Scope";
 type Items = vscode.TreeItem | ScopeScope | ScopeItem;
 
 export class ScopesManager implements vscode.TreeDataProvider<Items> {
-  private _onDidChangeTreeData: vscode.EventEmitter<
-    Items | undefined | null | void
-  > = new vscode.EventEmitter<Items | undefined | null | void>();
-  readonly onDidChangeTreeData: vscode.Event<Items | undefined | null | void> =
-    this._onDidChangeTreeData.event;
+
+  private _onDidChangeTreeData: vscode.EventEmitter<Items | undefined | null | void>
+    = new vscode.EventEmitter<Items | undefined | null | void>();
+
+  readonly onDidChangeTreeData: vscode.Event<Items | undefined | null | void>
+    = this._onDidChangeTreeData.event;
 
   private readonly extensionToggleEnabled = new class extends vscode.TreeItem {
     constructor() {
