@@ -82,7 +82,7 @@ export function activate(context: vscode.ExtensionContext) {
         scope.toggleEnabled()
       ),
       vscode.commands.registerCommand(
-        "project-scopes.toggleExclusion",
+        "project-scopes.addExclusionPath",
         (args) => {
           const path =
             args.path ||

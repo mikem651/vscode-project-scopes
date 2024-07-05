@@ -21,7 +21,7 @@
     "onStartupFinished",
     "onView:scopesManager",
     "onCommand:project-scopes.addExclusion",
-    "onCommand:project-scopes.toggleExclusion",
+    "onCommand:project-scopes.addExclusionPath",
     "onCommand:project-scopes.removeExclusion",
     "onCommand:project-scopes.editExclusion",
     "onCommand:project-scopes.toggle",
@@ -67,7 +67,7 @@
         "category": "Project Scopes"
       },
       {
-        "command": "project-scopes.toggleExclusion",
+        "command": "project-scopes.addExclusionPath",
         "title": "Project Scopes: Exclude path",
         "category": "Project Scopes"
       },
@@ -90,7 +90,7 @@
     "menus": {
       "editor/title/context": [
         {
-          "command": "project-scopes.toggleExclusion",
+          "command": "project-scopes.addExclusionPath",
           "group": "Project Scopes"
         },
         {
@@ -100,7 +100,7 @@
       ],
       "explorer/context": [
         {
-          "command": "project-scopes.toggleExclusion",
+          "command": "project-scopes.addExclusionPath",
           "group": "Project Scopes"
         },
         {
