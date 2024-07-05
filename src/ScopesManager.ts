@@ -22,14 +22,14 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
     return element;
   }
 
-  async getChildren(element?: Items): Promise<Items[]> {
+  getChildren(element?: Items): Items[] {
     if (element) {
       if (element instanceof ScopeScope) {
-        return Promise.all([
+        return [
           ...[...this.scope.scopeByName(element.label).excluded].sort().map(
-            async (path) => new ScopeItem(path, "exclusion", element.label)
+            (path) => new ScopeItem(path, "exclusion", element.label)
           ),
-        ]);
+        ];
       }
       return [] as Items[];
     } else {
