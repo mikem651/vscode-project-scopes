@@ -91,15 +91,15 @@ export class Scope {
     return this.scopeSettings[name];
   }
 
-  excludeItem(val: string) {
+  excludeItem(scopeName: string, val: string) {
     const path = vscode.workspace.asRelativePath(val);
-    this.scope["excluded"].add(path);
+    this.scopeByName(scopeName).excluded.add(path);
     this.saveScopes();
   }
 
-  dontExcludeItem(val: string) {
+  dontExcludeItem(scopeName: string, val: string) {
     const path = vscode.workspace.asRelativePath(val);
-    this.scope["excluded"].delete(path);
+    this.scopeByName(scopeName).excluded.delete(path);
     this.saveScopes();
   }
 

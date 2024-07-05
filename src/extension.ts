@@ -36,15 +36,13 @@ export function activate(context: vscode.ExtensionContext) {
         if (!selectedScope) {
           return;
         }
-        if (selectedScope) {
-          const glob = await vscode.window.showInputBox({
-            placeHolder: "Glob to exclude"
-          });
-          if (!glob) {
-            return;
-          }
-          scope.excludeItem(glob);
+        const glob = await vscode.window.showInputBox({
+          placeHolder: "Glob to exclude"
+        });
+        if (!glob) {
+          return;
         }
+        scope.excludeItem(selectedScope, glob);
       }),
       vscode.commands.registerCommand("project-scopes.delete", async (args) => {
         let selectedScope = args?.label;
@@ -56,11 +54,9 @@ export function activate(context: vscode.ExtensionContext) {
         if (!selectedScope) {
           return;
         }
-        if (selectedScope) {
-          const confirm = await vscode.window.showInformationMessage("Are you sure you want to delete this scope?", "Delete", "Cancel");
-          if (confirm === "Delete") {
-            scope.deleteScope(selectedScope);
-          }
+        const confirm = await vscode.window.showInformationMessage("Are you sure you want to delete this scope?", "Delete", "Cancel");
+        if (confirm === "Delete") {
+          scope.deleteScope(selectedScope);
         }
       }),
       vscode.commands.registerCommand(
@@ -92,7 +88,7 @@ export function activate(context: vscode.ExtensionContext) {
             args.path ||
             args.label ||
             vscode.window.activeTextEditor?.document.uri.path;
-          scope.excludeItem(path);
+          scope.excludeItem(args.scopeName || scope.getActiveScope(), path);
         }
       ),
       vscode.commands.registerCommand(
@@ -102,7 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
             args.path ||
             args.label ||
             vscode.window.activeTextEditor?.document.uri.path;
-          scope.dontExcludeItem(path);
+          scope.dontExcludeItem(args.scopeName || scope.getActiveScope(), path);
         }
       ),
       vscode.commands.registerCommand(
@@ -116,7 +112,7 @@ export function activate(context: vscode.ExtensionContext) {
             value: path, prompt: "Edit exclusion glob"
           });
           if (newPath) {
-            scope.editExcludeItem(args.scopeName, path, newPath);
+            scope.editExcludeItem(args.scopeName || scope.getActiveScope(), path, newPath);
           }
         }
       ),
