@@ -25,6 +25,7 @@
     "onCommand:project-scopes.removeExclusion",
     "onCommand:project-scopes.editExclusion",
     "onCommand:project-scopes.toggle",
+    "onCommand:project-scopes.toggleActivateScope",
     "onCommand:project-scopes.refresh",
     "onCommand:project-scopes.switcher",
     "onCommand:project-scopes.delete",
@@ -64,6 +65,11 @@
       {
         "command": "project-scopes.toggle",
         "title": "Toggle project scopes extension",
+        "category": "Project Scopes"
+      },
+      {
+        "command": "project-scopes.toggleActivateScope",
+        "title": "Toggle project scopes",
         "category": "Project Scopes"
       },
       {

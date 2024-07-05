@@ -71,7 +71,7 @@ export function activate(context: vscode.ExtensionContext) {
           scope.toggleActivateScope(userResponse);
         }
       ),
-      vscode.commands.registerCommand("project-scopes.toggleActiveScope", (args) =>
+      vscode.commands.registerCommand("project-scopes.toggleActivateScope", (args) =>
         scope.toggleActivateScope(args)
       ),
       vscode.commands.registerCommand("project-scopes.refresh", (args) =>

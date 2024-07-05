@@ -75,7 +75,7 @@ class ScopeScope extends vscode.TreeItem {
       active ? "folder-active" : "folder"
     );
     this.command = {
-      command: "project-scopes.toggleActiveScope",
+      command: "project-scopes.toggleActivateScope",
       title: "Change scope",
       arguments: [label],
     };
