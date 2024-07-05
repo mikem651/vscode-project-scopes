@@ -17,9 +17,6 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
   private readonly extensionToggleDisabled = this.createStaticTreeItem(
     "Showing Files", vscode.TreeItemCollapsibleState.None, "eye", "project-scopes.toggle");
 
-  private readonly addButton = this.createStaticTreeItem(
-    "Add new scope", vscode.TreeItemCollapsibleState.None, "file-directory-create", "project-scopes.add");
-
   constructor(private scope: Scope) {
     scope.subscribe(() => this.refresh());
   }
@@ -40,9 +37,7 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
 
         ...this.scope.scopes.map(
           (scope) => new ScopeScope(scope, this.scope.scopesActive.has(scope))
-        ),
-
-        this.addButton
+        )
       ];
     }
 
