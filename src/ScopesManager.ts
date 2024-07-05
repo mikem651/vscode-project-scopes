@@ -47,7 +47,7 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
 class AddButton extends vscode.TreeItem {
   constructor() {
     super("Add new scope", vscode.TreeItemCollapsibleState.None);
-    this.iconPath = new vscode.ThemeIcon("plus");
+    this.iconPath = new vscode.ThemeIcon("file-directory-create");
     this.command = {
       command: "project-scopes.add",
       title: "Add",
