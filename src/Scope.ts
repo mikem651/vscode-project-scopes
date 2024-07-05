@@ -67,16 +67,15 @@ export class Scope {
   }
 
   activateScope(scope: string) {
-    this.activeScopes.add(scope);
-    this.saveScopeSettings(scope);
+    this.xactivateScope(this.activeScopes.add.bind(this.activeScopes), scope);
   }
 
   deactivateScope(scope: string) {
-    this.activeScopes.delete(scope);
-    this.saveScopeSettings(scope);
+    this.xactivateScope(this.activeScopes.delete.bind(this.activeScopes), scope);
   }
 
-  private saveScopeSettings(scope: string) {
+  private xactivateScope(fn: (param: string) => unknown, scope: string) {
+    fn(scope);
     if (!this.scopeSettings[scope]) {
       this.scopeSettings[scope] = { included: new Set(), excluded: new Set() };
       this.saveScopes();
