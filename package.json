@@ -47,7 +47,8 @@
       {
         "command": "project-scopes.add",
         "title": "Add a new project scope and activate it",
-        "category": "Project Scopes"
+        "category": "Project Scopes",
+        "icon": "$(file-directory-create)"
       },
       {
         "command": "project-scopes.delete",
@@ -171,11 +172,15 @@
       "view/title": [
         {
           "command": "project-scopes.activateAllScopes",
-          "group": "navigation"
+          "group": "navigation@1"
         },
         {
           "command": "project-scopes.deactivateAllScopes",
-          "group": "navigation"
+          "group": "navigation@2"
+        },
+        {
+          "command": "project-scopes.add",
+          "group": "navigation@3"
         }
       ]
     },
