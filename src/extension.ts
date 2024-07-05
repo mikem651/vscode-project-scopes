@@ -107,12 +107,17 @@ export function activate(context: vscode.ExtensionContext) {
       ),
       vscode.commands.registerCommand(
         "project-scopes.editExclusion",
-        (args) => {
+        async (args) => {
           const path =
             args.path ||
             args.label ||
             vscode.window.activeTextEditor?.document.uri.path;
-          scope.editExcludeItem(path);
+          const newPath = await vscode.window.showInputBox({
+            value: path, prompt: "Edit exclusion glob"
+          });
+          if (newPath) {
+            scope.editExcludeItem(args.scope, path, newPath);
+          }
         }
       ),
     ]

@@ -103,15 +103,10 @@ export class Scope {
     this.saveScopes();
   }
 
-  async editExcludeItem(val: string) {
-    const oldPath = vscode.workspace.asRelativePath(val);
-    const newPath = await vscode.window.showInputBox({
-      value: oldPath, prompt: "Edit exclusion glob"
-    });
-
+  async editExcludeItem(scopeName: string, oldPath: string, newPath: string) {
     if (newPath) {
-      this.scope["excluded"].delete(oldPath);
-      this.scope["excluded"].add(newPath);
+      this.scopeByName(scopeName).excluded.delete(oldPath);
+      this.scopeByName(scopeName).excluded.add(newPath);
       this.saveScopes();
     }
   }

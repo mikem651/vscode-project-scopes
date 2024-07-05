@@ -27,7 +27,7 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
       if (element instanceof ScopeScope) {
         return Promise.all([
           ...[...this.scope.scopeByName(element.label).excluded].sort().map(
-            async (path) => new ScopeItem(path, "exclusion")
+            async (path) => new ScopeItem(path, "exclusion", element.label)
           ),
         ]);
       }
@@ -84,15 +84,19 @@ class ScopeScope extends vscode.TreeItem {
 }
 
 class ScopeItem extends vscode.TreeItem {
+  scopeName: string;
+
   constructor(
     public readonly label: string,
     context: string,
+    scopeName: string,
     tooltip?: string,
     iconPath?: string
   ) {
     super(label, vscode.TreeItemCollapsibleState.None);
     this.resourceUri = vscode.Uri.parse(label);
     this.contextValue = context;
+    this.scopeName = scopeName;
     if (tooltip) {
       this.tooltip = tooltip;
     }
