@@ -139,11 +139,6 @@
           "default": true,
           "description": "Whether or not to show/hide files based on scope selection"
         },
-        "project-scopes.activeScope": {
-          "type": "string",
-          "default": "base",
-          "description": "Scope currently in use by the Scopes extension"
-        },
         "project-scopes.activeScopes": {
           "type": "array",
           "default": [],
