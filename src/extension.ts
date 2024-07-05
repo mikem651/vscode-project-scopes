@@ -26,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
         scope.setActiveScope(userResponse);
       }),
-      vscode.commands.registerCommand("project-scopes.addExclusion", async (args) => {
+      vscode.commands.registerCommand("project-scopes.addExclusionGlob", async (args) => {
         let selectedScope = args?.label;
         if (!selectedScope) {
           selectedScope = await vscode.window.showQuickPick(scope.scopes, {

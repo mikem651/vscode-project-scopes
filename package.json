@@ -20,7 +20,7 @@
   "activationEvents": [
     "onStartupFinished",
     "onView:scopesManager",
-    "onCommand:project-scopes.addExclusion",
+    "onCommand:project-scopes.addExclusionGlob",
     "onCommand:project-scopes.addExclusionPath",
     "onCommand:project-scopes.removeExclusion",
     "onCommand:project-scopes.editExclusion",
@@ -82,7 +82,7 @@
         "category": "Project Scopes"
       },
       {
-        "command": "project-scopes.addExclusion",
+        "command": "project-scopes.addExclusionGlob",
         "title": "Add exclusion glob",
         "category": "Project Scopes"
       }
@@ -110,7 +110,7 @@
       ],
       "view/item/context": [
         {
-          "command": "project-scopes.addExclusion",
+          "command": "project-scopes.addExclusionGlob",
           "group": "Project Scopes",
           "when": "viewItem == 'scope'"
         },
