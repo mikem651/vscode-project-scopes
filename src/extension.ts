@@ -27,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
         scope.activateScope(userResponse);
       }),
       vscode.commands.registerCommand("project-scopes.addExclusionGlob", async (args) => {
-        let selectedScope = args?.label;
+        let selectedScope = args?.label || scope.singleActiveScope;
         if (!selectedScope) {
           selectedScope = await vscode.window.showQuickPick(scope.scopes, {
             title: "Select project scope to add to",
@@ -87,7 +87,7 @@ export function activate(context: vscode.ExtensionContext) {
             args.path ||
             args.label ||
             vscode.window.activeTextEditor?.document.uri.path;
-          let selectedScope = args.scopeName;
+          let selectedScope = args.scopeName || scope.singleActiveScope;
           if (!selectedScope) {
             selectedScope = await vscode.window.showQuickPick(scope.scopes, {
               title: "Select project scope to add to",
@@ -106,7 +106,7 @@ export function activate(context: vscode.ExtensionContext) {
             args.path ||
             args.label ||
             vscode.window.activeTextEditor?.document.uri.path;
-          let selectedScope = args.scopeName;
+          let selectedScope = args.scopeName || scope.singleActiveScope;
           if (!selectedScope) {
             selectedScope = await vscode.window.showQuickPick(scope.scopes, {
               title: "Select project scope to remove from",

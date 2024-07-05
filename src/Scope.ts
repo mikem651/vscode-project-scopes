@@ -48,6 +48,13 @@ export class Scope {
     return Object.keys(this.scopeSettings);
   }
 
+  get singleActiveScope(): string | null {
+    if (this.activeScopesGet.size === 1) {
+      return this.activeScopesGet.values().next().value;
+    }
+    return null;
+  }
+
   refresh() {
     this.getSettings();
     this.updateFilesExclude();
