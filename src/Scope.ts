@@ -44,8 +44,8 @@ export class Scope {
     return this.enabled;
   }
 
-  get scopes() {
-    return Object.keys(this.scopeSettings);
+  get scopes(): string[] {
+    return Object.keys(this.scopeSettings).sort();
   }
 
   get singleActiveScope(): string | null {
