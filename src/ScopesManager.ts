@@ -79,12 +79,14 @@ class ScopeScope extends vscode.TreeItem {
 }
 
 class ScopeItem extends vscode.TreeItem {
+  private static readonly codeFileExtensions = [".yml", ".yaml", ".xml", ".java", ".py", ".sql"];
+  private static readonly wildcards = ["*", "?", "[", "]"];
+
   constructor(
     public readonly label: string,
     context: string,
     public readonly scopeName: string,
-    tooltip?: string,
-    iconPath?: string
+    tooltip?: string
   ) {
     super(label, vscode.TreeItemCollapsibleState.None);
     this.resourceUri = vscode.Uri.parse(label);
@@ -92,6 +94,23 @@ class ScopeItem extends vscode.TreeItem {
     if (tooltip) {
       this.tooltip = tooltip;
     }
-    this.iconPath = new vscode.ThemeIcon(iconPath || "file");
+
+    let icon;
+
+    for (const fileExtension of ScopeItem.codeFileExtensions) {
+        if (label.endsWith(fileExtension)) {
+          icon = "file-code";
+        }
+    }
+    
+    if (!icon) {
+      for (const wildcard of ScopeItem.wildcards) {
+        if (label.includes(wildcard)) {
+          icon = "files";
+        }
+      }
+    }
+
+    this.iconPath = new vscode.ThemeIcon(icon || "file-text");
   }
 }
