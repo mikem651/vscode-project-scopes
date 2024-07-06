@@ -48,7 +48,7 @@
         "command": "project-scopes.add",
         "title": "Add a new project scope and activate it",
         "category": "Project Scopes",
-        "icon": "$(file-directory-create)"
+        "icon": "$(add)"
       },
       {
         "command": "project-scopes.delete",

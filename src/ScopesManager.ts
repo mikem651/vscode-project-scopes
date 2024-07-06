@@ -67,7 +67,7 @@ class ScopeScope extends vscode.TreeItem {
   constructor(public readonly label: string, active: boolean) {
     super(label, active ? vscode.TreeItemCollapsibleState.Expanded : vscode.TreeItemCollapsibleState.Collapsed);
     this.iconPath = new vscode.ThemeIcon(
-      active ? "folder-active" : "folder"
+      active ? "layers-active" : "layers"
     );
     this.command = {
       command: "project-scopes.toggleActivateScope",
