@@ -172,15 +172,18 @@
       "view/title": [
         {
           "command": "project-scopes.activateAllScopes",
-          "group": "navigation@1"
+          "group": "navigation@1",
+          "when": "view == scopesManager"
         },
         {
           "command": "project-scopes.deactivateAllScopes",
-          "group": "navigation@2"
+          "group": "navigation@2",
+          "when": "view == scopesManager"
         },
         {
           "command": "project-scopes.add",
-          "group": "navigation@3"
+          "group": "navigation@3",
+          "when": "view == scopesManager"
         }
       ]
     },
