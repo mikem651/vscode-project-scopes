@@ -1,6 +1,6 @@
 {
   "name": "project-scopes-v2",
-  "displayName": "Project Scopes",
+  "displayName": "Project Scopes V2",
   "description": "Define scopes which can contain multiple globs. Each scope can be enabled or disabled. Explorer will hide files that matched any enabled scope.",
   "version": "2.0.0",
   "license": "MIT",
