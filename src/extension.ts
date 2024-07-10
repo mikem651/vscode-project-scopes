@@ -19,7 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
       }),
       vscode.commands.registerCommand("scopes-lite.add", async (args) => {
         const userResponse = await vscode.window.showInputBox({
-          placeHolder: "Name the new project scope to create",
+          placeHolder: "Name the new scope to create",
         });
         if (!userResponse) {
           return;
@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
         let selectedScope = args?.label || scope.singleActiveScope;
         if (!selectedScope) {
           selectedScope = await vscode.window.showQuickPick(scope.scopes, {
-            title: "Select project scope to add to",
+            title: "Select scope to add to",
           });
         }
         if (!selectedScope) {
@@ -48,7 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
         let selectedScope = args?.label;
         if (!selectedScope) {
           selectedScope = await vscode.window.showQuickPick(scope.scopes, {
-            title: "Select project scope to DELETE",
+            title: "Select scope to delete",
           });
         }
         if (!selectedScope) {
@@ -63,7 +63,7 @@ export function activate(context: vscode.ExtensionContext) {
         "scopes-lite.switcher",
         async (args) => {
           const userResponse = await vscode.window.showQuickPick(scope.scopes, {
-            title: "Select project scope to toggle"
+            title: "Select scope to toggle"
           });
           if (!userResponse) {
             return;
@@ -96,7 +96,7 @@ export function activate(context: vscode.ExtensionContext) {
           let selectedScope = args.scopeName || scope.singleActiveScope;
           if (!selectedScope) {
             selectedScope = await vscode.window.showQuickPick(scope.scopes, {
-              title: "Select project scope to add to",
+              title: "Select scope to add to",
             });
           }
           if (!selectedScope) {
@@ -115,7 +115,7 @@ export function activate(context: vscode.ExtensionContext) {
           let selectedScope = args.scopeName || scope.singleActiveScope;
           if (!selectedScope) {
             selectedScope = await vscode.window.showQuickPick(scope.scopes, {
-              title: "Select project scope to remove from",
+              title: "Select scope to remove from",
             });
           }
           if (!selectedScope) {

@@ -46,66 +46,66 @@
     "commands": [
       {
         "command": "scopes-lite.add",
-        "title": "Add a new project scope and activate it",
-        "category": "Project Scopes",
+        "title": "Add a new scope and activate it",
+        "category": "Scopes Lite",
         "icon": "$(add)"
       },
       {
         "command": "scopes-lite.delete",
-        "title": "Delete project scope",
-        "category": "Project Scopes"
+        "title": "Delete scope",
+        "category": "Scopes Lite"
       },
       {
         "command": "scopes-lite.switcher",
-        "title": "Toggle project scope",
-        "category": "Project Scopes"
+        "title": "Toggle scope",
+        "category": "Scopes Lite"
       },
       {
         "command": "scopes-lite.refresh",
-        "title": "Refresh project scopes settings",
-        "category": "Project Scopes"
+        "title": "Refresh scopes settings",
+        "category": "Scopes Lite"
       },
       {
         "command": "scopes-lite.toggle",
-        "title": "Toggle project scopes extension",
-        "category": "Project Scopes"
+        "title": "Toggle scopes extension",
+        "category": "Scopes Lite"
       },
       {
         "command": "scopes-lite.toggleActivateScope",
-        "title": "Toggle project scope activation",
-        "category": "Project Scopes"
+        "title": "Toggle scope activation",
+        "category": "Scopes Lite"
       },
       {
         "command": "scopes-lite.activateAllScopes",
-        "title": "Activate all project scopes",
-        "category": "Project Scopes",
+        "title": "Activate all scopes",
+        "category": "Scopes Lite",
         "icon": "$(check-all)"
       },
       {
         "command": "scopes-lite.deactivateAllScopes",
-        "title": "Deactivate all project scopes",
-        "category": "Project Scopes",
+        "title": "Deactivate all scopes",
+        "category": "Scopes Lite",
         "icon": "$(clear-all)"
       },
       {
         "command": "scopes-lite.addExclusionPath",
-        "title": "Project Scopes: Hide path",
-        "category": "Project Scopes"
+        "title": "Scopes: Hide path",
+        "category": "Scopes Lite"
       },
       {
         "command": "scopes-lite.removeExclusion",
-        "title": "Project Scopes: Don't hide path",
-        "category": "Project Scopes"
+        "title": "Scopes: Don't hide path",
+        "category": "Scopes Lite"
       },
       {
         "command": "scopes-lite.editExclusion",
-        "title": "Project Scopes: Edit glob",
-        "category": "Project Scopes"
+        "title": "Scopes: Edit glob",
+        "category": "Scopes Lite"
       },
       {
         "command": "scopes-lite.addExclusionGlob",
         "title": "Add glob",
-        "category": "Project Scopes"
+        "category": "Scopes Lite"
       }
     ],
     "menus": {
@@ -130,42 +130,42 @@
       "editor/title/context": [
         {
           "command": "scopes-lite.addExclusionPath",
-          "group": "Project Scopes"
+          "group": "Scopes Lite"
         },
         {
           "command": "scopes-lite.removeExclusion",
-          "group": "Project Scopes"
+          "group": "Scopes Lite"
         }
       ],
       "explorer/context": [
         {
           "command": "scopes-lite.addExclusionPath",
-          "group": "Project Scopes"
+          "group": "Scopes Lite"
         },
         {
           "command": "scopes-lite.removeExclusion",
-          "group": "Project Scopes"
+          "group": "Scopes Lite"
         }
       ],
       "view/item/context": [
         {
           "command": "scopes-lite.addExclusionGlob",
-          "group": "Project Scopes",
+          "group": "Scopes Lite",
           "when": "viewItem == 'scope'"
         },
         {
           "command": "scopes-lite.delete",
-          "group": "Project Scopes",
+          "group": "Scopes Lite",
           "when": "viewItem == 'scope'"
         },
         {
           "command": "scopes-lite.removeExclusion",
-          "group": "Project Scopes",
+          "group": "Scopes Lite",
           "when": "viewItem == 'exclusion'"
         },
         {
           "command": "scopes-lite.editExclusion",
-          "group": "Project Scopes",
+          "group": "Scopes Lite",
           "when": "viewItem == 'exclusion'"
         }
       ],
@@ -188,7 +188,7 @@
       ]
     },
     "configuration": {
-      "title": "Project Scopes",
+      "title": "Scopes Lite",
       "properties": {
         "scopes-lite.enabled": {
           "type": "boolean",
