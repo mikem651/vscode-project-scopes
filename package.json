@@ -2,7 +2,7 @@
   "name": "scopes-lite",
   "displayName": "Scopes Lite",
   "description": "Define scopes which can contain multiple globs. Each scope can be enabled or disabled. Explorer will hide files that matched any enabled scope.",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "license": "MIT",
   "private": true,
   "publisher": "mikem651",
