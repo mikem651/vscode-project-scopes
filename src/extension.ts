@@ -13,11 +13,11 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     ...[
       vscode.workspace.onDidChangeConfiguration((e) => {
-        if (e.affectsConfiguration("project-scopes")) {
+        if (e.affectsConfiguration("scopes-lite")) {
           scope.refresh();
         }
       }),
-      vscode.commands.registerCommand("project-scopes.add", async (args) => {
+      vscode.commands.registerCommand("scopes-lite.add", async (args) => {
         const userResponse = await vscode.window.showInputBox({
           placeHolder: "Name the new project scope to create",
         });
@@ -26,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
         scope.activateScope(userResponse);
       }),
-      vscode.commands.registerCommand("project-scopes.addExclusionGlob", async (args) => {
+      vscode.commands.registerCommand("scopes-lite.addExclusionGlob", async (args) => {
         let selectedScope = args?.label || scope.singleActiveScope;
         if (!selectedScope) {
           selectedScope = await vscode.window.showQuickPick(scope.scopes, {
@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
         scope.excludeItem(selectedScope, glob);
       }),
-      vscode.commands.registerCommand("project-scopes.delete", async (args) => {
+      vscode.commands.registerCommand("scopes-lite.delete", async (args) => {
         let selectedScope = args?.label;
         if (!selectedScope) {
           selectedScope = await vscode.window.showQuickPick(scope.scopes, {
@@ -60,7 +60,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
       }),
       vscode.commands.registerCommand(
-        "project-scopes.switcher",
+        "scopes-lite.switcher",
         async (args) => {
           const userResponse = await vscode.window.showQuickPick(scope.scopes, {
             title: "Select project scope to toggle"
@@ -71,23 +71,23 @@ export function activate(context: vscode.ExtensionContext) {
           scope.toggleActivateScope(userResponse);
         }
       ),
-      vscode.commands.registerCommand("project-scopes.toggleActivateScope", (args) =>
+      vscode.commands.registerCommand("scopes-lite.toggleActivateScope", (args) =>
         scope.toggleActivateScope(args)
       ),
-      vscode.commands.registerCommand("project-scopes.activateAllScopes", (args) =>
+      vscode.commands.registerCommand("scopes-lite.activateAllScopes", (args) =>
         scope.activateScope(...scope.scopes)
       ),
-      vscode.commands.registerCommand("project-scopes.deactivateAllScopes", (args) =>
+      vscode.commands.registerCommand("scopes-lite.deactivateAllScopes", (args) =>
         scope.deactivateScope(...scope.scopes)
       ),
-      vscode.commands.registerCommand("project-scopes.refresh", (args) =>
+      vscode.commands.registerCommand("scopes-lite.refresh", (args) =>
         scope.refresh()
       ),
-      vscode.commands.registerCommand("project-scopes.toggle", (args) =>
+      vscode.commands.registerCommand("scopes-lite.toggle", (args) =>
         scope.toggleEnabled()
       ),
       vscode.commands.registerCommand(
-        "project-scopes.addExclusionPath",
+        "scopes-lite.addExclusionPath",
         async (args) => {
           const path =
             args.path ||
@@ -106,7 +106,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
       ),
       vscode.commands.registerCommand(
-        "project-scopes.removeExclusion",
+        "scopes-lite.removeExclusion",
         async (args) => {
           const path =
             args.path ||
@@ -125,7 +125,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
       ),
       vscode.commands.registerCommand(
-        "project-scopes.editExclusion",
+        "scopes-lite.editExclusion",
         async (args) => {
           const path =
             args.path ||

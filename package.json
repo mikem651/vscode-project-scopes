@@ -1,8 +1,8 @@
 {
-  "name": "project-scopes-v2",
-  "displayName": "Project Scopes V2",
+  "name": "scopes-lite",
+  "displayName": "Scopes Lite",
   "description": "Define scopes which can contain multiple globs. Each scope can be enabled or disabled. Explorer will hide files that matched any enabled scope.",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "license": "MIT",
   "private": true,
   "publisher": "mikem651",
@@ -20,18 +20,18 @@
   "activationEvents": [
     "onStartupFinished",
     "onView:scopesManager",
-    "onCommand:project-scopes.addExclusionGlob",
-    "onCommand:project-scopes.addExclusionPath",
-    "onCommand:project-scopes.removeExclusion",
-    "onCommand:project-scopes.editExclusion",
-    "onCommand:project-scopes.toggle",
-    "onCommand:project-scopes.toggleActivateScope",
-    "onCommand:project-scopes.activateAllScopes",
-    "onCommand:project-scopes.deactivateAllScopes",
-    "onCommand:project-scopes.refresh",
-    "onCommand:project-scopes.switcher",
-    "onCommand:project-scopes.delete",
-    "onCommand:project-scopes.add"
+    "onCommand:scopes-lite.addExclusionGlob",
+    "onCommand:scopes-lite.addExclusionPath",
+    "onCommand:scopes-lite.removeExclusion",
+    "onCommand:scopes-lite.editExclusion",
+    "onCommand:scopes-lite.toggle",
+    "onCommand:scopes-lite.toggleActivateScope",
+    "onCommand:scopes-lite.activateAllScopes",
+    "onCommand:scopes-lite.deactivateAllScopes",
+    "onCommand:scopes-lite.refresh",
+    "onCommand:scopes-lite.switcher",
+    "onCommand:scopes-lite.delete",
+    "onCommand:scopes-lite.add"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -39,71 +39,71 @@
       "explorer": [
         {
           "id": "scopesManager",
-          "name": "Project Scopes"
+          "name": "Scopes"
         }
       ]
     },
     "commands": [
       {
-        "command": "project-scopes.add",
+        "command": "scopes-lite.add",
         "title": "Add a new project scope and activate it",
         "category": "Project Scopes",
         "icon": "$(add)"
       },
       {
-        "command": "project-scopes.delete",
+        "command": "scopes-lite.delete",
         "title": "Delete project scope",
         "category": "Project Scopes"
       },
       {
-        "command": "project-scopes.switcher",
+        "command": "scopes-lite.switcher",
         "title": "Toggle project scope",
         "category": "Project Scopes"
       },
       {
-        "command": "project-scopes.refresh",
+        "command": "scopes-lite.refresh",
         "title": "Refresh project scopes settings",
         "category": "Project Scopes"
       },
       {
-        "command": "project-scopes.toggle",
+        "command": "scopes-lite.toggle",
         "title": "Toggle project scopes extension",
         "category": "Project Scopes"
       },
       {
-        "command": "project-scopes.toggleActivateScope",
+        "command": "scopes-lite.toggleActivateScope",
         "title": "Toggle project scope activation",
         "category": "Project Scopes"
       },
       {
-        "command": "project-scopes.activateAllScopes",
+        "command": "scopes-lite.activateAllScopes",
         "title": "Activate all project scopes",
         "category": "Project Scopes",
         "icon": "$(check-all)"
       },
       {
-        "command": "project-scopes.deactivateAllScopes",
+        "command": "scopes-lite.deactivateAllScopes",
         "title": "Deactivate all project scopes",
         "category": "Project Scopes",
         "icon": "$(clear-all)"
       },
       {
-        "command": "project-scopes.addExclusionPath",
+        "command": "scopes-lite.addExclusionPath",
         "title": "Project Scopes: Hide path",
         "category": "Project Scopes"
       },
       {
-        "command": "project-scopes.removeExclusion",
+        "command": "scopes-lite.removeExclusion",
         "title": "Project Scopes: Don't hide path",
         "category": "Project Scopes"
       },
       {
-        "command": "project-scopes.editExclusion",
+        "command": "scopes-lite.editExclusion",
         "title": "Project Scopes: Edit glob",
         "category": "Project Scopes"
       },
       {
-        "command": "project-scopes.addExclusionGlob",
+        "command": "scopes-lite.addExclusionGlob",
         "title": "Add glob",
         "category": "Project Scopes"
       }
@@ -111,77 +111,77 @@
     "menus": {
       "commandPalette": [
         {
-          "command": "project-scopes.addExclusionPath",
+          "command": "scopes-lite.addExclusionPath",
           "when": "false"
         },
         {
-          "command": "project-scopes.removeExclusion",
+          "command": "scopes-lite.removeExclusion",
           "when": "false"
         },
         {
-          "command": "project-scopes.editExclusion",
+          "command": "scopes-lite.editExclusion",
           "when": "false"
         },
         {
-          "command": "project-scopes.toggleActivateScope",
+          "command": "scopes-lite.toggleActivateScope",
           "when": "false"
         }
       ],
       "editor/title/context": [
         {
-          "command": "project-scopes.addExclusionPath",
+          "command": "scopes-lite.addExclusionPath",
           "group": "Project Scopes"
         },
         {
-          "command": "project-scopes.removeExclusion",
+          "command": "scopes-lite.removeExclusion",
           "group": "Project Scopes"
         }
       ],
       "explorer/context": [
         {
-          "command": "project-scopes.addExclusionPath",
+          "command": "scopes-lite.addExclusionPath",
           "group": "Project Scopes"
         },
         {
-          "command": "project-scopes.removeExclusion",
+          "command": "scopes-lite.removeExclusion",
           "group": "Project Scopes"
         }
       ],
       "view/item/context": [
         {
-          "command": "project-scopes.addExclusionGlob",
+          "command": "scopes-lite.addExclusionGlob",
           "group": "Project Scopes",
           "when": "viewItem == 'scope'"
         },
         {
-          "command": "project-scopes.delete",
+          "command": "scopes-lite.delete",
           "group": "Project Scopes",
           "when": "viewItem == 'scope'"
         },
         {
-          "command": "project-scopes.removeExclusion",
+          "command": "scopes-lite.removeExclusion",
           "group": "Project Scopes",
           "when": "viewItem == 'exclusion'"
         },
         {
-          "command": "project-scopes.editExclusion",
+          "command": "scopes-lite.editExclusion",
           "group": "Project Scopes",
           "when": "viewItem == 'exclusion'"
         }
       ],
       "view/title": [
         {
-          "command": "project-scopes.activateAllScopes",
+          "command": "scopes-lite.activateAllScopes",
           "group": "navigation@1",
           "when": "view == scopesManager"
         },
         {
-          "command": "project-scopes.deactivateAllScopes",
+          "command": "scopes-lite.deactivateAllScopes",
           "group": "navigation@2",
           "when": "view == scopesManager"
         },
         {
-          "command": "project-scopes.add",
+          "command": "scopes-lite.add",
           "group": "navigation@3",
           "when": "view == scopesManager"
         }
@@ -190,22 +190,22 @@
     "configuration": {
       "title": "Project Scopes",
       "properties": {
-        "project-scopes.enabled": {
+        "scopes-lite.enabled": {
           "type": "boolean",
           "default": true,
           "description": "Whether or not to show/hide files based on scope selection"
         },
-        "project-scopes.activeScopes": {
+        "scopes-lite.activeScopes": {
           "type": "array",
           "default": [],
           "description": "Scopes currently in use by the Scopes extension"
         },
-        "project-scopes.globalExclude": {
+        "scopes-lite.globalExclude": {
           "type": "object",
           "default": null,
           "description": "Globals to merge in with scope settings into files.exclude"
         },
-        "project-scopes.scopes": {
+        "scopes-lite.scopes": {
           "type": "object",
           "default": {
             "base": {

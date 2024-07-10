@@ -12,10 +12,10 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
     = this._onDidChangeTreeData.event;
 
   private readonly extensionToggleEnabled = this.createStaticTreeItem(
-    "Hiding Files", vscode.TreeItemCollapsibleState.None, "eye-closed", "project-scopes.toggle");
+    "Hiding Files", vscode.TreeItemCollapsibleState.None, "eye-closed", "scopes-lite.toggle");
 
   private readonly extensionToggleDisabled = this.createStaticTreeItem(
-    "Showing Files", vscode.TreeItemCollapsibleState.None, "eye", "project-scopes.toggle");
+    "Showing Files", vscode.TreeItemCollapsibleState.None, "eye", "scopes-lite.toggle");
 
   constructor(private scope: Scope) {
     scope.subscribe(() => this.refresh());
@@ -70,7 +70,7 @@ class ScopeScope extends vscode.TreeItem {
       active ? "layers-active" : "layers"
     );
     this.command = {
-      command: "project-scopes.toggleActivateScope",
+      command: "scopes-lite.toggleActivateScope",
       title: "Change scope",
       arguments: [label],
     };

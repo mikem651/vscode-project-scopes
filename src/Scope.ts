@@ -15,7 +15,7 @@ const defaultScopes: JSONScopes = {
   },
 };
 
-const CONFIG = "project-scopes";
+const CONFIG = "scopes-lite";
 
 export class Scope {
   private scopeSettings: Record<string, ScopeSettings> = {};
