@@ -2,7 +2,7 @@
   "name": "scopes-lite",
   "displayName": "Scopes Lite",
   "description": "Define scopes which can contain multiple globs. Each scope can be enabled or disabled. Explorer will hide files that matched any enabled scope.",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "license": "MIT",
   "private": true,
   "publisher": "mikem651",
@@ -12,26 +12,13 @@
     "url": "https://github.com/mikem651/vscode-project-scopes.git"
   },
   "engines": {
-    "vscode": "^1.70.0"
+    "vscode": "^1.75.0"
   },
   "categories": [
     "Other"
   ],
   "activationEvents": [
-    "onStartupFinished",
-    "onView:scopesManager",
-    "onCommand:scopes-lite.addExclusionGlob",
-    "onCommand:scopes-lite.addExclusionPath",
-    "onCommand:scopes-lite.removeExclusion",
-    "onCommand:scopes-lite.editExclusion",
-    "onCommand:scopes-lite.toggle",
-    "onCommand:scopes-lite.toggleActivateScope",
-    "onCommand:scopes-lite.activateAllScopes",
-    "onCommand:scopes-lite.deactivateAllScopes",
-    "onCommand:scopes-lite.refresh",
-    "onCommand:scopes-lite.switcher",
-    "onCommand:scopes-lite.delete",
-    "onCommand:scopes-lite.add"
+    "onStartupFinished"
   ],
   "main": "./out/extension.js",
   "contributes": {
