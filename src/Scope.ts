@@ -1,19 +1,20 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import { glob } from "glob";
-import { setServers } from "dns";
 
 type ScopeSettings = {
+  included: Set<string>;
   excluded: Set<string>;
 };
 
 type JSONScopes = Record<
   string,
-  Record<"excluded", Array<string>>
+  Record<"included" | "excluded", Array<string>>
 >;
 
 const defaultScopes: JSONScopes = {
   base: {
+    included: [],
     excluded: [],
   },
 };
@@ -87,7 +88,7 @@ export class Scope {
     for (const scope of scopes) {
       fn(scope);
       if (!this.scopeSettings[scope]) {
-        this.scopeSettings[scope] = { excluded: new Set() };
+        this.scopeSettings[scope] = { included: new Set(), excluded: new Set() };
         needToSave = true;
       }
     }
@@ -160,6 +161,7 @@ export class Scope {
     this.scopeSettings = {};
     Object.keys(scopes).forEach((key) => {
       this.scopeSettings[key] = {
+        included: new Set(scopes[key].included),
         excluded: new Set(scopes[key].excluded),
       };
     });
@@ -211,6 +213,7 @@ export class Scope {
     Object.keys(this.scopeSettings).forEach((key) => {
       const scope = this.scopeSettings[key];
       scopes[key] = {
+        included: [...scope.included.values()],
         excluded: [...scope.excluded.values()],
       };
     });

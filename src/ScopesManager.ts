@@ -43,9 +43,30 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
 
     if (element instanceof ScopeScope) {
       return [
-        ...[...this.scope.scopeByName(element.label).excluded].sort().map(
-          (path) => new ScopeItem(path, "exclusion", element.label)
-        ),
+          new ScopeInclusion(
+            element.label,
+            this.scope.scopeByName(element.label).included.size
+          ),
+          new ScopeExclusion(
+            element.label,
+            this.scope.scopeByName(element.label).excluded.size
+          ),
+      ];
+    }
+
+    if (element instanceof ScopeInclusion) {
+      return [
+        ...[...this.scope.scopeByName(element.scopeName).included].map(
+          (path) => new ScopeItem(path, "inclusion", element.scopeName)
+        )
+      ];
+    }
+
+    if (element instanceof ScopeExclusion) {
+      return [
+        ...[...this.scope.scopeByName(element.scopeName).excluded].map(
+          (path) => new ScopeItem(path, "exclusion", element.scopeName)
+        )
       ];
     }
 
@@ -75,6 +96,20 @@ class ScopeScope extends vscode.TreeItem {
       arguments: [label],
     };
     this.contextValue = "scope";
+  }
+}
+
+class ScopeInclusion extends vscode.TreeItem {
+  constructor(public scopeName: string, count: number) {
+    super(`Include (${count})`, vscode.TreeItemCollapsibleState.Collapsed);
+    this.iconPath = new vscode.ThemeIcon("check");
+  }
+}
+
+class ScopeExclusion extends vscode.TreeItem {
+  constructor(public scopeName: string, count: number) {
+    super(`Exclude (${count})`, vscode.TreeItemCollapsibleState.Collapsed);
+    this.iconPath = new vscode.ThemeIcon("circle-slash");
   }
 }
 
