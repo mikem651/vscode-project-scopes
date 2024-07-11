@@ -276,7 +276,8 @@
     "test": "node ./out/test/runTest.js"
   },
   "dependencies": {
-    "glob": "^11.0.0"
+    "glob": "^11.0.0",
+    "is-glob": "^4.0.3"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.0",
