@@ -128,17 +128,18 @@ export class Scope {
     return vscode.workspace.asRelativePath(val);
   }
 
-  includePath(scopeName: string, val: string) {
+  includePath(scopeName: string, val: string): boolean {
     const path = this.normalizePath(val);
     if (isGlob(path)) {
       console.log(`Glob wildcards not allowed for included! ${path}`);
       vscode.window.showErrorMessage("Glob wildcards not allowed for included");
-      return;
+      return false;
     }
 
     this.scopeByName(scopeName).excluded.delete(path);
     this.scopeByName(scopeName).included.add(path);
     this.saveScopes();
+    return true;
   }
 
   excludeGlob(scopeName: string, val: string) {
@@ -162,9 +163,10 @@ export class Scope {
 
   editInclusion(scopeName: string, oldPath: string, newPath: string) {
     if (newPath && newPath !== oldPath) {
-      this.includePath(scopeName, newPath);
-      this.scopeByName(scopeName).included.delete(this.normalizePath(oldPath));
-      this.saveScopes();
+      if (this.includePath(scopeName, newPath)) {
+        this.scopeByName(scopeName).included.delete(this.normalizePath(oldPath));
+        this.saveScopes();
+      }
     }
   }
 
