@@ -124,12 +124,14 @@ export class Scope {
 
   includeItem(scopeName: string, val: string) {
     const path = vscode.workspace.asRelativePath(val);
+    this.scopeByName(scopeName).excluded.delete(path);
     this.scopeByName(scopeName).included.add(path);
     this.saveScopes();
   }
 
   excludeItem(scopeName: string, val: string) {
     const path = vscode.workspace.asRelativePath(val);
+    this.scopeByName(scopeName).included.delete(path);
     this.scopeByName(scopeName).excluded.add(path);
     this.saveScopes();
   }
