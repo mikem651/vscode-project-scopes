@@ -96,7 +96,7 @@
       },
       {
         "command": "scopes-lite.editInclusion",
-        "title": "Scopes: Edit glob",
+        "title": "Scopes: Edit path",
         "category": "Scopes Lite"
       },
       {
@@ -106,7 +106,7 @@
       },
       {
         "command": "scopes-lite.addInclusionGlob",
-        "title": "Add inclusion glob",
+        "title": "Add inclusion path",
         "category": "Scopes Lite"
       },
       {
