@@ -1,4 +1,7 @@
 import * as vscode from "vscode";
+import * as path from "path";
+import { glob } from "glob";
+import { setServers } from "dns";
 
 type ScopeSettings = {
   excluded: Set<string>;
@@ -164,15 +167,33 @@ export class Scope {
 
   private generateExclusionGlobs(): Record<string, true> | null {
     let result: Record<string, true> = { ...this.globalExclude };
+
     if (!this.enabled) {
       return result;
     }
 
     for (const activeScope of this.activeScopes) {
       for (const exclude of this.scopeByName(activeScope).excluded) {
-        result[exclude] = true;
+        // result[exclude] = true;
       }
     }
+
+    const allIncluded: string[] = [];
+
+    for (const activeScope of this.activeScopes) {
+      // const excluded = Array.from(this.scopeByName(activeScope).excluded);
+      // const inclusions = this.generateInclusionGlobs(excluded);
+      // console.log("inclusions globs for " + excluded.join(', ') + " : " + Array.from(inclusions).join(', '));
+
+      const excluded = this.scopeByName(activeScope).excluded;
+      allIncluded.push(...excluded);
+    }
+    const inclusions = this.generateInclusionGlobs(allIncluded);
+    console.log("inclusions globs for " + allIncluded.join(', ') + " : " + Array.from(inclusions).join(', '));
+    for (const inclusion of inclusions) {
+      result[inclusion] = true;
+    }
+
     return result;
   }
 
@@ -195,4 +216,102 @@ export class Scope {
     });
     this.setConfig("scopes", scopes);
   }
+
+  generateInclusionGlobs(included: string[]): Set<string> {
+    const sets = this.generateInclusionGlobsPerIncluded(included);
+    if (!sets || sets.length === 0) {
+      return new Set();
+    }
+    return this.intersectPaths(...sets);
+  }
+
+  generateInclusionGlobsPerIncluded(included: string[]): Set<string>[] | undefined  {
+    if (!vscode.workspace.workspaceFolders) {
+        return;
+    }
+    const rootPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
+
+    const rel = vscode.workspace.asRelativePath;
+
+    // all sets of files and folders to exclude, one per included
+    // if there are multiple 'included', some sets will contain a glob to exclude another included folder
+    let sets: Set<string>[] = [];
+    for (const folderPath of included) {
+      // set of files and folders to exclude in the included folder's path of the tree
+      const set = new Set<string>();
+      let folder = rel(folderPath);
+      let parent = path.dirname(folder);
+
+      // iterate through the folder and then its ancestors
+      while (folder !== path.dirname(parent)) {
+        // get the list of siblings (folders and files) of the current folder, excluding the current folder
+        const siblings = glob.sync(path.join(rootPath, parent, "*"), {
+          ignore: path.join(rootPath, folder),
+          dot: true,
+        });
+
+        // add each sibling to the set of globs
+        siblings.forEach((p) => set.add(rel(p)));
+
+        // move up one folder level
+        folder = parent;
+        parent = path.dirname(parent);
+      }
+
+      // remove . for current directory
+      set.delete(".");
+      sets.push(set);
+    }
+  
+    // console.log("scopes inclusion globs: " + sets.join('\n'));
+    return sets;
+  }
+
+  intersectPaths(...sets: Set<string>[]): Set<string> {
+    // merge the sets using reduce
+    return sets.reduce((acc, set) => this.intersetPathsPair(acc, set));
+  }
+
+  // merge two sets of exclusions
+  intersetPathsPair(setA: Set<string>, setB: Set<string>): Set<string> {
+    const res = new Set<string>();
+
+    // iterate through each exclusion in the first set
+    for (let val of setA) {
+      let v = val;
+
+      // check if setB contains any sub-fragment of val
+      // val = foo/bar/tux
+      // check foo/bar/tux, foo/bar, foo
+      while (v !== "." && v !== path.sep) {
+        if (setB.has(v)) {
+          // setB contains an exclusion of part of val
+          // add val to the result set
+          // setA: foo/bar/tux
+          // setB: foo
+          // in A-B loop add to res: foo/bar/tux
+          // in B-A loop foo is not added
+          res.add(val);
+          break;
+        }
+
+        // strip off the last directory
+        v = path.dirname(v);
+      }
+    }
+
+    // do the same thing in the other direction
+    for (let val of setB) {
+      let v = val;
+      while (v !== "." && v !== path.sep) {
+        if (setA.has(v)) {
+          res.add(val);
+          break;
+        }
+        v = path.dirname(v);
+      }
+    }
+    return res;
+  }
+
 }
