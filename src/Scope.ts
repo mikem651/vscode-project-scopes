@@ -2,6 +2,8 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { glob } from "glob";
 
+const isGlob = require("is-glob");
+
 type ScopeSettings = {
   included: Set<string>;
   excluded: Set<string>;
@@ -122,44 +124,54 @@ export class Scope {
     return this.scopeSettings[name];
   }
 
-  includeItem(scopeName: string, val: string) {
-    const path = vscode.workspace.asRelativePath(val);
+  normalizePath(val: string) {
+    return vscode.workspace.asRelativePath(val);
+  }
+
+  includePath(scopeName: string, val: string) {
+    const path = this.normalizePath(val);
+    if (isGlob(path)) {
+      console.log(`Glob wildcards not allowed for included! ${path}`);
+      vscode.window.showErrorMessage("Glob wildcards not allowed for included");
+      return;
+    }
+
     this.scopeByName(scopeName).excluded.delete(path);
     this.scopeByName(scopeName).included.add(path);
     this.saveScopes();
   }
 
-  excludeItem(scopeName: string, val: string) {
-    const path = vscode.workspace.asRelativePath(val);
+  excludeGlob(scopeName: string, val: string) {
+    const path = this.normalizePath(val);
     this.scopeByName(scopeName).included.delete(path);
     this.scopeByName(scopeName).excluded.add(path);
     this.saveScopes();
   }
 
-  dontIncludeItem(scopeName: string, val: string) {
-    const path = vscode.workspace.asRelativePath(val);
+  removeInclusion(scopeName: string, val: string) {
+    const path = this.normalizePath(val);
     this.scopeByName(scopeName).included.delete(path);
     this.saveScopes();
   }
 
-  dontExcludeItem(scopeName: string, val: string) {
-    const path = vscode.workspace.asRelativePath(val);
+  removeExclusion(scopeName: string, val: string) {
+    const path = this.normalizePath(val);
     this.scopeByName(scopeName).excluded.delete(path);
     this.saveScopes();
   }
 
-  editIncludeItem(scopeName: string, oldPath: string, newPath: string) {
-    if (newPath) {
-      this.scopeByName(scopeName).included.delete(vscode.workspace.asRelativePath(oldPath));
-      this.scopeByName(scopeName).included.add(vscode.workspace.asRelativePath(newPath));
+  editInclusion(scopeName: string, oldPath: string, newPath: string) {
+    if (newPath && newPath !== oldPath) {
+      this.includePath(scopeName, newPath);
+      this.scopeByName(scopeName).included.delete(this.normalizePath(oldPath));
       this.saveScopes();
     }
   }
 
-  editExcludeItem(scopeName: string, oldPath: string, newPath: string) {
+  editExclusion(scopeName: string, oldPath: string, newPath: string) {
     if (newPath) {
-      this.scopeByName(scopeName).excluded.delete(vscode.workspace.asRelativePath(oldPath));
-      this.scopeByName(scopeName).excluded.add(vscode.workspace.asRelativePath(newPath));
+      this.scopeByName(scopeName).excluded.delete(this.normalizePath(oldPath));
+      this.scopeByName(scopeName).excluded.add(this.normalizePath(newPath));
       this.saveScopes();
     }
   }
@@ -246,21 +258,24 @@ export class Scope {
     return this.intersectPaths(...sets);
   }
 
-  generateInclusionGlobsPerIncluded(included: string[]): Set<string>[] | undefined  {
+  generateInclusionGlobsPerIncluded(includedPaths: string[]): Set<string>[] | undefined  {
     if (!vscode.workspace.workspaceFolders) {
         return;
     }
     const rootPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
 
-    const rel = vscode.workspace.asRelativePath;
-
     // all sets of files and folders to exclude, one per included
     // if there are multiple 'included', some sets will contain a glob to exclude another included folder
     let sets: Set<string>[] = [];
-    for (const folderPath of included) {
+    for (const folderPath of includedPaths) {
+      if (isGlob(folderPath)) {
+        console.log(`Glob wildcards not allowed for included! ${folderPath}`);
+        continue;
+      }
+
       // set of files and folders to exclude in the included folder's path of the tree
       const set = new Set<string>();
-      let folder = rel(folderPath);
+      let folder = this.normalizePath(folderPath);
       let parent = path.dirname(folder);
 
       // iterate through the folder and then its ancestors
@@ -272,7 +287,7 @@ export class Scope {
         });
 
         // add each sibling to the set of globs
-        siblings.forEach((p) => set.add(rel(p)));
+        siblings.forEach((p) => set.add(this.normalizePath(p)));
 
         // move up one folder level
         folder = parent;

@@ -42,7 +42,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (!glob) {
           return;
         }
-        scope.includeItem(selectedScope, glob);
+        scope.includePath(selectedScope, glob);
       }),
       vscode.commands.registerCommand("scopes-lite.addExclusionGlob", async (args) => {
         let selectedScope = args?.scopeName || scope.singleActiveScope;
@@ -60,7 +60,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (!glob) {
           return;
         }
-        scope.excludeItem(selectedScope, glob);
+        scope.excludeGlob(selectedScope, glob);
       }),
       vscode.commands.registerCommand("scopes-lite.delete", async (args) => {
         let selectedScope = args?.label;
@@ -120,7 +120,7 @@ export function activate(context: vscode.ExtensionContext) {
           if (!selectedScope) {
             return;
           }
-          scope.includeItem(selectedScope, path);
+          scope.includePath(selectedScope, path);
         }
       ),
       vscode.commands.registerCommand(
@@ -139,7 +139,7 @@ export function activate(context: vscode.ExtensionContext) {
           if (!selectedScope) {
             return;
           }
-          scope.excludeItem(selectedScope, path);
+          scope.excludeGlob(selectedScope, path);
         }
       ),
       vscode.commands.registerCommand(
@@ -158,7 +158,7 @@ export function activate(context: vscode.ExtensionContext) {
           if (!selectedScope) {
             return;
           }
-          scope.dontIncludeItem(selectedScope, path);
+          scope.removeInclusion(selectedScope, path);
         }
       ),
       vscode.commands.registerCommand(
@@ -177,7 +177,7 @@ export function activate(context: vscode.ExtensionContext) {
           if (!selectedScope) {
             return;
           }
-          scope.dontExcludeItem(selectedScope, path);
+          scope.removeExclusion(selectedScope, path);
         }
       ),
       vscode.commands.registerCommand(
@@ -194,7 +194,7 @@ export function activate(context: vscode.ExtensionContext) {
             return;
           }
           if (newPath) {
-            scope.editIncludeItem(args.scopeName, path, newPath);
+            scope.editInclusion(args.scopeName, path, newPath);
           }
         }
       ),
@@ -212,7 +212,7 @@ export function activate(context: vscode.ExtensionContext) {
             return;
           }
           if (newPath) {
-            scope.editExcludeItem(args.scopeName, path, newPath);
+            scope.editExclusion(args.scopeName, path, newPath);
           }
         }
       ),
