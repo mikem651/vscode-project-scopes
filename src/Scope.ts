@@ -122,9 +122,21 @@ export class Scope {
     return this.scopeSettings[name];
   }
 
+  includeItem(scopeName: string, val: string) {
+    const path = vscode.workspace.asRelativePath(val);
+    this.scopeByName(scopeName).included.add(path);
+    this.saveScopes();
+  }
+
   excludeItem(scopeName: string, val: string) {
     const path = vscode.workspace.asRelativePath(val);
     this.scopeByName(scopeName).excluded.add(path);
+    this.saveScopes();
+  }
+
+  dontIncludeItem(scopeName: string, val: string) {
+    const path = vscode.workspace.asRelativePath(val);
+    this.scopeByName(scopeName).included.delete(path);
     this.saveScopes();
   }
 
@@ -132,6 +144,14 @@ export class Scope {
     const path = vscode.workspace.asRelativePath(val);
     this.scopeByName(scopeName).excluded.delete(path);
     this.saveScopes();
+  }
+
+  editIncludeItem(scopeName: string, oldPath: string, newPath: string) {
+    if (newPath) {
+      this.scopeByName(scopeName).included.delete(vscode.workspace.asRelativePath(oldPath));
+      this.scopeByName(scopeName).included.add(vscode.workspace.asRelativePath(newPath));
+      this.saveScopes();
+    }
   }
 
   editExcludeItem(scopeName: string, oldPath: string, newPath: string) {
@@ -176,19 +196,15 @@ export class Scope {
 
     for (const activeScope of this.activeScopes) {
       for (const exclude of this.scopeByName(activeScope).excluded) {
-        // result[exclude] = true;
+        result[exclude] = true;
       }
     }
 
     const allIncluded: string[] = [];
 
     for (const activeScope of this.activeScopes) {
-      // const excluded = Array.from(this.scopeByName(activeScope).excluded);
-      // const inclusions = this.generateInclusionGlobs(excluded);
-      // console.log("inclusions globs for " + excluded.join(', ') + " : " + Array.from(inclusions).join(', '));
-
-      const excluded = this.scopeByName(activeScope).excluded;
-      allIncluded.push(...excluded);
+      const included = this.scopeByName(activeScope).included;
+      allIncluded.push(...included);
     }
     const inclusions = this.generateInclusionGlobs(allIncluded);
     console.log("inclusions globs for " + allIncluded.join(', ') + " : " + Array.from(inclusions).join(', '));

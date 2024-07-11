@@ -26,6 +26,24 @@ export function activate(context: vscode.ExtensionContext) {
         }
         scope.activateScope(userResponse);
       }),
+      vscode.commands.registerCommand("scopes-lite.addInclusionGlob", async (args) => {
+        let selectedScope = args?.label || scope.singleActiveScope;
+        if (!selectedScope) {
+          selectedScope = await vscode.window.showQuickPick(scope.scopes, {
+            title: "Select scope to add to",
+          });
+        }
+        if (!selectedScope) {
+          return;
+        }
+        const glob = await vscode.window.showInputBox({
+          placeHolder: "Glob to include"
+        });
+        if (!glob) {
+          return;
+        }
+        scope.includeItem(selectedScope, glob);
+      }),
       vscode.commands.registerCommand("scopes-lite.addExclusionGlob", async (args) => {
         let selectedScope = args?.label || scope.singleActiveScope;
         if (!selectedScope) {
@@ -37,7 +55,7 @@ export function activate(context: vscode.ExtensionContext) {
           return;
         }
         const glob = await vscode.window.showInputBox({
-          placeHolder: "Glob to hide"
+          placeHolder: "Glob to exclude"
         });
         if (!glob) {
           return;
@@ -87,6 +105,25 @@ export function activate(context: vscode.ExtensionContext) {
         scope.toggleEnabled()
       ),
       vscode.commands.registerCommand(
+        "scopes-lite.addInclusionPath",
+        async (args) => {
+          const path =
+            args.path ||
+            args.label ||
+            vscode.window.activeTextEditor?.document.uri.path;
+          let selectedScope = args.scopeName || scope.singleActiveScope;
+          if (!selectedScope) {
+            selectedScope = await vscode.window.showQuickPick(scope.scopes, {
+              title: "Select scope to add to",
+            });
+          }
+          if (!selectedScope) {
+            return;
+          }
+          scope.includeItem(selectedScope, path);
+        }
+      ),
+      vscode.commands.registerCommand(
         "scopes-lite.addExclusionPath",
         async (args) => {
           const path =
@@ -106,6 +143,25 @@ export function activate(context: vscode.ExtensionContext) {
         }
       ),
       vscode.commands.registerCommand(
+        "scopes-lite.removeInclusion",
+        async (args) => {
+          const path =
+            args.path ||
+            args.label ||
+            vscode.window.activeTextEditor?.document.uri.path;
+          let selectedScope = args.scopeName || scope.singleActiveScope;
+          if (!selectedScope) {
+            selectedScope = await vscode.window.showQuickPick(scope.scopes, {
+              title: "Select scope to remove from",
+            });
+          }
+          if (!selectedScope) {
+            return;
+          }
+          scope.dontIncludeItem(selectedScope, path);
+        }
+      ),
+      vscode.commands.registerCommand(
         "scopes-lite.removeExclusion",
         async (args) => {
           const path =
@@ -122,6 +178,24 @@ export function activate(context: vscode.ExtensionContext) {
             return;
           }
           scope.dontExcludeItem(selectedScope, path);
+        }
+      ),
+      vscode.commands.registerCommand(
+        "scopes-lite.editInclusion",
+        async (args) => {
+          const path =
+            args.path ||
+            args.label ||
+            vscode.window.activeTextEditor?.document.uri.path;
+          const newPath = await vscode.window.showInputBox({
+            value: path, prompt: "Edit glob"
+          });
+          if (!args.scopeName) {
+            return;
+          }
+          if (newPath) {
+            scope.editIncludeItem(args.scopeName, path, newPath);
+          }
         }
       ),
       vscode.commands.registerCommand(

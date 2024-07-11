@@ -75,18 +75,38 @@
         "icon": "$(clear-all)"
       },
       {
+        "command": "scopes-lite.addInclusionPath",
+        "title": "Scopes: Include path",
+        "category": "Scopes Lite"
+      },
+      {
         "command": "scopes-lite.addExclusionPath",
-        "title": "Scopes: Hide path",
+        "title": "Scopes: Exclude path",
+        "category": "Scopes Lite"
+      },
+      {
+        "command": "scopes-lite.removeInclusion",
+        "title": "Scopes: Remove inclusion",
         "category": "Scopes Lite"
       },
       {
         "command": "scopes-lite.removeExclusion",
-        "title": "Scopes: Don't hide path",
+        "title": "Scopes: Remove exclusion",
+        "category": "Scopes Lite"
+      },
+      {
+        "command": "scopes-lite.editInclusion",
+        "title": "Scopes: Edit glob",
         "category": "Scopes Lite"
       },
       {
         "command": "scopes-lite.editExclusion",
         "title": "Scopes: Edit glob",
+        "category": "Scopes Lite"
+      },
+      {
+        "command": "scopes-lite.addInclusionGlob",
+        "title": "Add glob",
         "category": "Scopes Lite"
       },
       {
@@ -98,11 +118,23 @@
     "menus": {
       "commandPalette": [
         {
+          "command": "scopes-lite.addInclusionPath",
+          "when": "false"
+        },
+        {
           "command": "scopes-lite.addExclusionPath",
           "when": "false"
         },
         {
+          "command": "scopes-lite.removeInclusion",
+          "when": "false"
+        },
+        {
           "command": "scopes-lite.removeExclusion",
+          "when": "false"
+        },
+        {
+          "command": "scopes-lite.editInclusion",
           "when": "false"
         },
         {
@@ -116,7 +148,15 @@
       ],
       "editor/title/context": [
         {
+          "command": "scopes-lite.addInclusionPath",
+          "group": "Scopes Lite"
+        },
+        {
           "command": "scopes-lite.addExclusionPath",
+          "group": "Scopes Lite"
+        },
+        {
+          "command": "scopes-lite.removeInclusion",
           "group": "Scopes Lite"
         },
         {
@@ -126,7 +166,15 @@
       ],
       "explorer/context": [
         {
+          "command": "scopes-lite.addInclusionPath",
+          "group": "Scopes Lite"
+        },
+        {
           "command": "scopes-lite.addExclusionPath",
+          "group": "Scopes Lite"
+        },
+        {
+          "command": "scopes-lite.removeInclusion",
           "group": "Scopes Lite"
         },
         {
@@ -136,9 +184,14 @@
       ],
       "view/item/context": [
         {
+          "command": "scopes-lite.addInclusionGlob",
+          "group": "Scopes Lite",
+          "when": "viewItem == 'scopeInclude'"
+        },
+        {
           "command": "scopes-lite.addExclusionGlob",
           "group": "Scopes Lite",
-          "when": "viewItem == 'scope'"
+          "when": "viewItem == 'scopeExclude'"
         },
         {
           "command": "scopes-lite.delete",
@@ -146,9 +199,19 @@
           "when": "viewItem == 'scope'"
         },
         {
+          "command": "scopes-lite.removeInclusion",
+          "group": "Scopes Lite",
+          "when": "viewItem == 'inclusion'"
+        },
+        {
           "command": "scopes-lite.removeExclusion",
           "group": "Scopes Lite",
           "when": "viewItem == 'exclusion'"
+        },
+        {
+          "command": "scopes-lite.editInclusion",
+          "group": "Scopes Lite",
+          "when": "viewItem == 'inclusion'"
         },
         {
           "command": "scopes-lite.editExclusion",

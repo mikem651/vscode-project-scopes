@@ -43,18 +43,18 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
 
     if (element instanceof ScopeScope) {
       return [
-          new ScopeInclusion(
+          new ScopeInclude(
             element.label,
             this.scope.scopeByName(element.label).included.size
           ),
-          new ScopeExclusion(
+          new ScopeExclude(
             element.label,
             this.scope.scopeByName(element.label).excluded.size
           ),
       ];
     }
 
-    if (element instanceof ScopeInclusion) {
+    if (element instanceof ScopeInclude) {
       return [
         ...[...this.scope.scopeByName(element.scopeName).included].map(
           (path) => new ScopeItem(path, "inclusion", element.scopeName)
@@ -62,7 +62,7 @@ export class ScopesManager implements vscode.TreeDataProvider<Items> {
       ];
     }
 
-    if (element instanceof ScopeExclusion) {
+    if (element instanceof ScopeExclude) {
       return [
         ...[...this.scope.scopeByName(element.scopeName).excluded].map(
           (path) => new ScopeItem(path, "exclusion", element.scopeName)
@@ -99,16 +99,18 @@ class ScopeScope extends vscode.TreeItem {
   }
 }
 
-class ScopeInclusion extends vscode.TreeItem {
+class ScopeInclude extends vscode.TreeItem {
   constructor(public scopeName: string, count: number) {
     super(`Include (${count})`, vscode.TreeItemCollapsibleState.Collapsed);
+    this.contextValue = 'scopeInclude';
     this.iconPath = new vscode.ThemeIcon("check");
   }
 }
 
-class ScopeExclusion extends vscode.TreeItem {
+class ScopeExclude extends vscode.TreeItem {
   constructor(public scopeName: string, count: number) {
     super(`Exclude (${count})`, vscode.TreeItemCollapsibleState.Collapsed);
+    this.contextValue = 'scopeExclude';
     this.iconPath = new vscode.ThemeIcon("circle-slash");
   }
 }
