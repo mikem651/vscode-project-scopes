@@ -167,19 +167,19 @@
       "explorer/context": [
         {
           "command": "scopes-lite.addInclusionPath",
-          "group": "Scopes Lite"
+          "group": "Scopes Lite@1"
         },
         {
           "command": "scopes-lite.addExclusionPath",
-          "group": "Scopes Lite"
+          "group": "Scopes Lite@3"
         },
         {
           "command": "scopes-lite.removeInclusion",
-          "group": "Scopes Lite"
+          "group": "Scopes Lite@2"
         },
         {
           "command": "scopes-lite.removeExclusion",
-          "group": "Scopes Lite"
+          "group": "Scopes Lite@4"
         }
       ],
       "view/item/context": [
