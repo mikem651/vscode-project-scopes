@@ -27,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
         scope.activateScope(userResponse);
       }),
       vscode.commands.registerCommand("scopes-lite.addInclusionGlob", async (args) => {
-        let selectedScope = args?.label || scope.singleActiveScope;
+        let selectedScope = args?.scopeName || scope.singleActiveScope;
         if (!selectedScope) {
           selectedScope = await vscode.window.showQuickPick(scope.scopes, {
             title: "Select scope to add to",
@@ -45,7 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
         scope.includeItem(selectedScope, glob);
       }),
       vscode.commands.registerCommand("scopes-lite.addExclusionGlob", async (args) => {
-        let selectedScope = args?.label || scope.singleActiveScope;
+        let selectedScope = args?.scopeName || scope.singleActiveScope;
         if (!selectedScope) {
           selectedScope = await vscode.window.showQuickPick(scope.scopes, {
             title: "Select scope to add to",
