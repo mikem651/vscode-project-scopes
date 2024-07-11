@@ -101,7 +101,7 @@ class ScopeScope extends vscode.TreeItem {
 
 class ScopeInclude extends vscode.TreeItem {
   constructor(public scopeName: string, count: number) {
-    super(`Include (${count})`, vscode.TreeItemCollapsibleState.Collapsed);
+    super(`Include Paths (${count})`, vscode.TreeItemCollapsibleState.Collapsed);
     this.contextValue = 'scopeInclude';
     this.iconPath = new vscode.ThemeIcon("check");
   }
@@ -109,7 +109,7 @@ class ScopeInclude extends vscode.TreeItem {
 
 class ScopeExclude extends vscode.TreeItem {
   constructor(public scopeName: string, count: number) {
-    super(`Exclude (${count})`, vscode.TreeItemCollapsibleState.Collapsed);
+    super(`Exclude Globs (${count})`, vscode.TreeItemCollapsibleState.Collapsed);
     this.contextValue = 'scopeExclude';
     this.iconPath = new vscode.ThemeIcon("circle-slash");
   }
