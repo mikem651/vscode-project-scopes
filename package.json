@@ -106,12 +106,12 @@
       },
       {
         "command": "scopes-lite.addInclusionGlob",
-        "title": "Add glob",
+        "title": "Add inclusion glob",
         "category": "Scopes Lite"
       },
       {
         "command": "scopes-lite.addExclusionGlob",
-        "title": "Add glob",
+        "title": "Add exclusion glob",
         "category": "Scopes Lite"
       }
     ],
