@@ -273,7 +273,8 @@
     "watch": "npx tsc -watch -p ./",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "build": "npx @vscode/vsce package"
   },
   "dependencies": {
     "glob": "^11.0.0",
